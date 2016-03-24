@@ -1,5 +1,7 @@
 #include <Servo.h>
 
+//Jag har skrivit
+
 //Pin definitions
 const int LEFTIR = 9;
 const int RIGHTIR = 2;
