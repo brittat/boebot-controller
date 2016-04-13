@@ -12,7 +12,6 @@ float getDistanceIR(int outPin, int sensPin)
   
   for(long f = baseFreq; f < maxFreq; f = f + freqStep)
   {
-    //Serial.println(f);
     tone(outPin, f, 4);
     delay(1);
     if(digitalRead(sensPin))
@@ -21,18 +20,18 @@ float getDistanceIR(int outPin, int sensPin)
     }
     delay(1);
   }
-  return dist/(1.0*divider) ;
+  return dist/divider ;
 }
 
 // Wrappers for servo motors
 void leftSpeed(int speed)
 {
-  leftMotor.writeMicroseconds(1500+speed);
+  //leftMotor.writeMicroseconds(1500+speed);
 }
 
 void rightSpeed(int speed)
 {
-  rightMotor.writeMicroseconds(1500-speed);
+  //rightMotor.writeMicroseconds(1500-speed);
 }
 
 // Takes sum of array, used for low pass filter
@@ -46,3 +45,4 @@ float arraySum(float array[], int l)
   }
   return ret;
 }
+
