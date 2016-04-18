@@ -1,47 +1,79 @@
-//long lastToneChange = 0;
-//const long freqStep = 500;
-//const long baseFreq = 38000;
-//const long maxFreq = 44000;
-//const float divider = (maxFreq - baseFreq)/freqStep;
-//const int rampStepLength = 4;
-//long currFreq = baseFreq;
-//enum IRDirection {LEFT, RIGHT, STOP};
-//IRDirection currDir = STOP;
-//
-//void rampGenerator()
-//{
-//  int t = millis();
-//  if(t-lastToneChange >= rampStepLength)
-//  {
-//    lastToneChange = t;
-//    currFreq += freqStep;
-//    if(currFreq > maxFreq)
-//    {
-//      currFreq = baseFreq;
-//      currDir = STOP;
-//    }
-//    switch(currDir)
-//    {
-//      case STOP:
-//        noTone(RIGHTIR);
-//        noTone(LEFTIR);
-//        break;
-//      case LEFT:
-//        tone(LEFTIR, currFreq);
-//        break;
-//      case RIGHT:
-//        tone(RIGHTIR, currFreq);
-//    }
-//  }
-//  
-//  for(long f = baseFreq; f < maxFreq; f = f + freqStep)
-//  {
-//    tone(outPin, f, 4);
-//    delay(1);
-//    if(digitalRead(sensPin))
-//    {
-//      dist = dist+1;
-//    }
-//    delay(1);
-//  }
-//}
+
+
+
+void rampGenerator()
+{
+  
+  long t = millis();
+  if(t-lastToneChange >= rampStepLength)
+  {
+    measuredFlag = false;
+    lastToneChange = t;
+    currFreq += freqStep;
+    Serial.println(currIRDir);
+    if(currFreq > maxFreq && currIRDir == RIGHT)
+    {
+      
+      currFreq = baseFreq;
+      IRDistLeft = tempIRLeft;
+      tempIRLeft = 0;
+      currIRDir = STOPRIGHT;
+    }
+
+    
+    if(currFreq > maxFreq && currIRDir == LEFT)
+    {
+      IRDistRight = tempIRRight;
+      tempIRRight = 0;
+      currFreq = baseFreq;
+      currIRDir = STOPLEFT;
+    }
+    switch(currIRDir)
+    {
+      case STOPLEFT:
+        noTone(RIGHTIR);
+        noTone(LEFTIR);
+        currIRDir = RIGHT;
+        break;
+      case STOPRIGHT:
+      Serial.println("derp");
+        noTone(RIGHTIR);
+        noTone(LEFTIR);
+        currIRDir == LEFT;
+        break;
+      case LEFT:
+        tone(LEFTIR, currFreq);
+        break;
+      case RIGHT:
+        tone(RIGHTIR, currFreq);
+        break;
+    }
+  }
+  if(currIRDir == LEFT)
+  {
+    
+    if(t-lastToneChange >= IRWaitTime && !measuredFlag)
+    {
+      
+      if(digitalRead(LEFTIRSENS))
+      {
+       
+       measuredFlag == true;
+       tempIRLeft = tempIRLeft + 1;
+      }
+    }
+  }
+  else if (currIRDir == RIGHT)
+  {
+    
+    if(t-lastToneChange >= IRWaitTime && !measuredFlag)
+    {
+      if(digitalRead(RIGHTIRSENS))
+      {
+        measuredFlag == true;
+        tempIRRight = tempIRRight + 1;
+      }
+    }
+  }
+}
+  

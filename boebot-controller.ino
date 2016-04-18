@@ -35,10 +35,33 @@ const int pingPin = 11;
 
 int sonarState = 0;
 int currDir = 0;
-long startDelay = 0;
-long tSonar = 0;
+unsigned long startDelay = 0;
+unsigned long tSonar = 0;
 
 int centimeters[nDir];
+
+// Ramp generator stuff
+unsigned long lastToneChange = 0;
+const long freqStep = 500;
+const long baseFreq = 38000;
+const long maxFreq = 44000;
+const float divider = (maxFreq - baseFreq)/freqStep;
+const long rampStepLength = 4;
+const long IRWaitTime = 1;
+long currFreq = baseFreq;
+enum IRDirection {LEFT, RIGHT, STOPLEFT, STOPRIGHT};
+IRDirection currIRDir = STOPLEFT;
+
+int IRDistLeft = 0;
+int IRDistRight = 0;
+
+int tempIRLeft = 0;
+int tempIRRight = 0;
+
+bool measuredFlag = false;
+
+
+
 
 Servo leftMotor;
 Servo rightMotor;
@@ -59,8 +82,8 @@ void setup() {
 
 void loop() {
 
-  rightSens = 0;//getDistanceIR(RIGHTIR, RIGHTIRSENS);
-  leftSens = 0;//getDistanceIR(LEFTIR, LEFTIRSENS);
+  rightSens = getDistanceIR(RIGHTIR, RIGHTIRSENS);
+  leftSens = getDistanceIR(LEFTIR, LEFTIRSENS);
 
   leftIRLP[lpPointer%LPLength] = leftSens;
   rightIRLP[lpPointer%LPLength] = rightSens;
@@ -78,13 +101,13 @@ void loop() {
 
   Serial.print(sonarState);
   Serial.print(" ");
-  Serial.print(centimeters[0]);
+  Serial.print(IRDistLeft);
   Serial.print(" ");
-  Serial.println(centimeters[1]);
+  Serial.println(IRDistRight);
 
   stateMachine();
   sonarStateMachine();
-  
+  rampGenerator();
 }
 
 
