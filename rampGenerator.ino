@@ -3,14 +3,14 @@
 
 void rampGenerator()
 {
-  
-  long t = millis();
   if(t-lastToneChange >= rampStepLength)
   {
     measuredFlag = false;
     lastToneChange = t;
     currFreq += freqStep;
-    Serial.println(currIRDir);
+    Serial.print(currIRDir);
+    Serial.print(' ');
+    Serial.println(currFreq);
     if(currFreq > maxFreq && currIRDir == RIGHT)
     {
       
@@ -37,7 +37,6 @@ void rampGenerator()
         break;
         
       case STOPRIGHT:
-        Serial.println("derp");
         noTone(RIGHTIR);
         noTone(LEFTIR);
         currIRDir = LEFT;
@@ -59,8 +58,7 @@ void rampGenerator()
     {
       
       if(digitalRead(LEFTIRSENS))
-      {
-       
+      {      
        measuredFlag == true;
        tempIRLeft = tempIRLeft + 1;
       }

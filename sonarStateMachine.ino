@@ -1,31 +1,30 @@
 
 
 
-
+const int dirAngle = 180/nDir;
 void sonarStateMachine()
 { 
-  tSonar = micros();
   switch(sonarState)
   {
     case 0: // Move servo into position
-      sonarMotor.write(180*currDir/nDir);
+      sonarMotor.write(dirAngle*dirAngle);
       pinMode(pingPin, OUTPUT);          // Set pin to OUTPUT
       digitalWrite(pingPin, LOW);
-      startDelay = tSonar;
+      startDelay = t;
       sonarState = 1;
       break;
       
     case 1: //Wait for servo
-      if(tSonar - startDelay > servoWaitTime)
+      if(t - startDelay > servoWaitTime)
       {
         sonarState = 2;
-        startDelay = tSonar;
+        startDelay = t;
       }
       break;
 
     case 2: // Send init pulse
       digitalWrite(pingPin, HIGH);
-      if(tSonar - startDelay > initPulseTime)
+      if(t - startDelay > initPulseTime)
       {
         sonarState = 3;
         
@@ -38,7 +37,7 @@ void sonarStateMachine()
       if(digitalRead(pingPin) == HIGH)
       {
         sonarState = 4;
-        startDelay = tSonar;
+        startDelay = t;
       }
       break;
 
@@ -46,8 +45,8 @@ void sonarStateMachine()
 
       if(digitalRead(pingPin) == LOW)
       {
-        long duration = tSonar - startDelay;
-        centimeters[currDir] = duration / 59.2 ;
+        long duration = t - startDelay;
+        millimeters[currDir] = duration * 0.169 ;
         sonarState = 5;
       }
       break;
