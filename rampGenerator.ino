@@ -35,15 +35,18 @@ void rampGenerator()
         noTone(LEFTIR);
         currIRDir = RIGHT;
         break;
+        
       case STOPRIGHT:
-      Serial.println("derp");
+        Serial.println("derp");
         noTone(RIGHTIR);
         noTone(LEFTIR);
-        currIRDir == LEFT;
+        currIRDir = LEFT;
         break;
+        
       case LEFT:
         tone(LEFTIR, currFreq);
         break;
+        
       case RIGHT:
         tone(RIGHTIR, currFreq);
         break;

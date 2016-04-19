@@ -91,7 +91,10 @@ void loop() {
 
   rightSens = arraySum(rightIRLP, LPLength)/(1.0*LPLength);
   leftSens = arraySum(leftIRLP, LPLength)/(1.0*LPLength);
-
+  
+  stateMachine();
+  sonarStateMachine();
+  rampGenerator();
 
 //  Serial.print(state);
 //  Serial.print(" ");
@@ -105,9 +108,7 @@ void loop() {
   Serial.print(" ");
   Serial.println(IRDistRight);
 
-  stateMachine();
-  sonarStateMachine();
-  rampGenerator();
+  
 }
 
 
