@@ -46,3 +46,45 @@ float arraySum(float array[], int l)
   return ret;
 }
 
+
+void sonarPulse()
+{
+  noInterrupts();
+  pinMode(pingPin, OUTPUT);
+  digitalWrite(pingPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(pingPin, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(pingPin, LOW);
+  pinMode(pingPin, INPUT);
+  interrupts();
+}
+
+void sonarISR()
+{
+  if(digitalRead(pingPin) == HIGH)
+  {
+    pulseStart = micros();
+  } else 
+  {
+    newSonarPulse = true;
+    pulseEnd = micros();
+  }
+}
+
+int calcSonarDistance()
+{
+  return (pulseEnd - pulseStart) * 0.169;
+}
+
+void serialPrintArray(int array[], int l)
+{
+  for(int i = 0; i < l; i++)
+  {
+    Serial.print(array[i]);
+    Serial.print(' ');
+  }
+  Serial.println();
+}
+
+

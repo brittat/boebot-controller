@@ -6,7 +6,7 @@
 const int LEFTIR = 9;
 const int RIGHTIR = 2;
 const int LEFTIRSENS = 10;
-const int RIGHTIRSENS = 3;
+const int RIGHTIRSENS = 4;
 
 const int LEFTMOTOR = 13;
 const int RIGHTMOTOR = 12;
@@ -29,14 +29,20 @@ int state = 0;
 //Sonar state machine stuff 
 
 const long initPulseTime = 5000;
-const int nDir = 8;
-const long servoWaitTime = 1000000;
-const int pingPin = 11;
+const int nDir = 32;
+const long servoWaitTime = 200000;
+const long sonarLinger = 100000;
+const int pingPin = 3;
 
 int sonarState = 0;
 int currDir = 0;
 unsigned long startDelay = 0;
 unsigned long tSonar = 0;
+
+bool newSonarPulse = false;
+volatile unsigned long pulseStart, pulseEnd;
+
+
 
 int millimeters[nDir];
 
@@ -79,26 +85,22 @@ void setup() {
   leftMotor.attach(LEFTMOTOR);
   rightMotor.attach(RIGHTMOTOR);
   sonarMotor.attach(SONARMOTOR);
+
+  attachInterrupt(digitalPinToInterrupt(pingPin), sonarISR, CHANGE);
 }
 
 void loop() {
-//
-//  rightSens = getDistanceIR(RIGHTIR, RIGHTIRSENS);
-//  leftSens = getDistanceIR(LEFTIR, LEFTIRSENS);
-//
-//  leftIRLP[lpPointer%LPLength] = leftSens;
-//  rightIRLP[lpPointer%LPLength] = rightSens;
-//  lpPointer++;
-//
-//  rightSens = arraySum(rightIRLP, LPLength) / LPLength;
-//  leftSens = arraySum(leftIRLP, LPLength) / LPLength;
-//  
+
 
   long oldT = t;
   t = micros();
 
-  Serial.print("dt = ");
-  Serial.println(t-oldT);
+//  Serial.print("dt = ");
+//  Serial.println(t-oldT);
+//
+//  Serial.print(" sonarState = ");
+  
+
 
   stateMachine();
   sonarStateMachine();

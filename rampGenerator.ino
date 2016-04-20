@@ -8,9 +8,7 @@ void rampGenerator()
     measuredFlag = false;
     lastToneChange = t;
     currFreq += freqStep;
-    Serial.print(currIRDir);
-    Serial.print(' ');
-    Serial.println(currFreq);
+
     if(currFreq > maxFreq && currIRDir == RIGHT)
     {
       

@@ -4,10 +4,17 @@
 const int dirAngle = 180/nDir;
 void sonarStateMachine()
 { 
+  if(newSonarPulse)
+  {
+    millimeters[currDir] = calcSonarDistance();
+    newSonarPulse = false;
+    serialPrintArray(millimeters, nDir);
+  }
+  
   switch(sonarState)
   {
     case 0: // Move servo into position
-      sonarMotor.write(dirAngle*dirAngle);
+      sonarMotor.write(currDir*dirAngle);
       pinMode(pingPin, OUTPUT);          // Set pin to OUTPUT
       digitalWrite(pingPin, LOW);
       startDelay = t;
@@ -23,35 +30,19 @@ void sonarStateMachine()
       break;
 
     case 2: // Send init pulse
-      digitalWrite(pingPin, HIGH);
-      if(t - startDelay > initPulseTime)
-      {
-        sonarState = 3;
-        
-        digitalWrite(pingPin, LOW);        
-        pinMode(pingPin, INPUT);
-      }
+      sonarPulse();
+      startDelay = t;
+      sonarState = 3;
       break;
 
     case 3:
-      if(digitalRead(pingPin) == HIGH)
+      if(t-startDelay > sonarLinger)
       {
         sonarState = 4;
-        startDelay = t;
       }
       break;
 
-    case 4: // Wait for input pin to go low
-
-      if(digitalRead(pingPin) == LOW)
-      {
-        long duration = t - startDelay;
-        millimeters[currDir] = duration * 0.169 ;
-        sonarState = 5;
-      }
-      break;
-
-    case 5: // Set next direction and repeat
+    case 4: // Set next direction and repeat
       currDir++;
       currDir = currDir%nDir;
       sonarState = 0;
