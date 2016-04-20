@@ -101,10 +101,10 @@ void loop() {
 //  Serial.print(" sonarState = ");
   
 
-
-  stateMachine();
-  sonarStateMachine();
-  rampGenerator();
+  leftSpeed(50);
+  //stateMachine();
+  //sonarStateMachine();
+  //rampGenerator();
   
 }
 

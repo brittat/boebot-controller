@@ -26,12 +26,12 @@ float getDistanceIR(int outPin, int sensPin)
 // Wrappers for servo motors
 void leftSpeed(int speed)
 {
-  //leftMotor.writeMicroseconds(1500+speed);
+  leftMotor.writeMicroseconds(1500+speed);
 }
 
 void rightSpeed(int speed)
 {
-  //rightMotor.writeMicroseconds(1500-speed);
+  rightMotor.writeMicroseconds(1500-speed);
 }
 
 // Takes sum of array, used for low pass filter
@@ -87,4 +87,29 @@ void serialPrintArray(int array[], int l)
   Serial.println();
 }
 
+int arrayMax(int array[], int l)
+{
+  int maxVal = 0;
+  for(int i = 0; i < l; i++)
+  {
+    if(array[i] > maxVal)
+    {
+      maxVal = array[i];
+    }
+  }
+  return maxVal;
+}
+
+int arrayMin(int array[], int l)
+{
+  int minVal = array[0];
+  for(int i = 1; i < l; i++)
+  {
+    if(array[i] < minVal)
+    {
+      maxVal = array[i];
+    }
+  }
+  return minVal;
+}
 
