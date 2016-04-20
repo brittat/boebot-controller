@@ -46,6 +46,18 @@ float arraySum(float array[], int l)
   return ret;
 }
 
+int sumIR(int irID)
+{
+  int reading = 0;
+  int nPoints = 10;
+  for (int i = 0; i < nPoints; i++)
+  {
+    int ir = digitalRead(irID);
+    reading = reading + ir;    
+  }
+  return reading;
+}
+
 
 void sonarPulse()
 {
