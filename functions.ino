@@ -58,7 +58,6 @@ int sumIR(int irID)
   return reading;
 }
 
-
 void sonarPulse()
 {
   noInterrupts();
@@ -119,7 +118,7 @@ int arrayMin(int array[], int l)
   {
     if(array[i] < minVal)
     {
-      maxVal = array[i];
+      minVal = array[i];
     }
   }
   return minVal;
