@@ -24,14 +24,25 @@ float getDistanceIR(int outPin, int sensPin)
 }
 
 // Wrappers for servo motors
-void leftSpeed(int speed)
+void leftSpeed(float omega)
 {
-  leftMotor.writeMicroseconds(1500+speed);
+  int servoSignal = 1500 + 0.0086 * omega + 0.0468;
+  leftMotor.writeMicroseconds(servoSignal);
 }
 
-void rightSpeed(int speed)
+void rightSpeed(float omega)
 {
-  rightMotor.writeMicroseconds(1500-speed);
+  int servoSignal = 1500 - (0.0095 * omega + 0.0245);
+  rightMotor.writeMicroseconds(servoSignal);
+}
+
+void turnAngle(float deltaAngle)
+{
+  int turnTime = deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
+    
+  leftSpeed(-turnRate/2)
+  rightSpeed(turnRate/2)
+  
 }
 
 
