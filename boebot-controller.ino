@@ -1,6 +1,5 @@
 #include <Servo.h>
 
-//Jag har skrivit
 
 //Pin definitions
 const int LEFTIR = 9;
@@ -30,7 +29,7 @@ int state = 0;
 
 const long initPulseTime = 5000;
 const int nDir = 32;
-const long servoWaitTime = 200000;
+const long servoWaitTime = 100000;
 const long sonarLinger = 100000;
 const int pingPin = 3;
 
@@ -101,9 +100,9 @@ void loop() {
 //  Serial.print(" sonarState = ");
   
 
-  leftSpeed(50);
+  //leftSpeed(50);
   //stateMachine();
-  //sonarStateMachine();
+  sonarStateMachine();
   //rampGenerator();
   
 }

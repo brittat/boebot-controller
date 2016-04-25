@@ -34,17 +34,7 @@ void rightSpeed(int speed)
   rightMotor.writeMicroseconds(1500-speed);
 }
 
-// Takes sum of array, used for low pass filter
-float arraySum(float array[], int l)
-{
-  float ret = 0;
-  for(int i = 0; i < l; i++)
-  {
-    //Serial.println(array[i]);
-    ret += array[i];
-  }
-  return ret;
-}
+
 
 int sumIR(int irID)
 {
@@ -58,6 +48,8 @@ int sumIR(int irID)
   return reading;
 }
 
+//Send out a pulse from the sonar by sending a 5 us pulse on the data line.
+//Note that interrupts are temporarily turned off to avoid reading the init pulse.
 void sonarPulse()
 {
   noInterrupts();
@@ -71,7 +63,10 @@ void sonarPulse()
   interrupts();
 }
 
-void sonarISR()
+
+//Interrupt service routine for the sonar. 
+//It is run every time an edge is detected on the sonar data line.
+void sonarISR() 
 {
   if(digitalRead(pingPin) == HIGH)
   {
@@ -83,11 +78,16 @@ void sonarISR()
   }
 }
 
+
+//Get distance from sonar timing data
 int calcSonarDistance()
 {
   return (pulseEnd - pulseStart) * 0.169;
 }
 
+
+//Various array functions. 
+//C does not like to pass arrays, so the length has to be passed as well.
 void serialPrintArray(int array[], int l)
 {
   for(int i = 0; i < l; i++)
@@ -124,3 +124,14 @@ int arrayMin(int array[], int l)
   return minVal;
 }
 
+// Takes sum of array, used for low pass filter
+float arraySum(float array[], int l)
+{
+  float ret = 0;
+  for(int i = 0; i < l; i++)
+  {
+    //Serial.println(array[i]);
+    ret += array[i];
+  }
+  return ret;
+}

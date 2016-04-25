@@ -1,14 +1,16 @@
 const int maxFeatureDepth = 30;
 const float aperture = 3.14/nDir;
+
+
 void detectFeatures()
 {
-  int groups[nDir];
+  int groups[nDir]; //Array to contain group assignments
   int cGroup = 1;
   groups[0] = cGroup;
 
   for(int i = 1; i < nDir; i++)
   {
-    if(abs(millimeters[i] - millimeters[i-1]) < maxFeatureDepth)
+    if(abs(millimeters[i] - millimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
@@ -18,20 +20,20 @@ void detectFeatures()
       groups[i] = cGroup;
     }
   }
-
+  Serial.println("Features found:");
   for(int iGroup = 1; iGroup <= cGroup; iGroup++)
   {
     int groupLength = getGroupLength(groups, iGroup);
     if(groupLength > 1)
     {
-      int angle = aperture * groupLength;
-      int dist = getMeanGroupDist(groups, iGroup);
-      int width = 2 * dist * sin(angle/2);
-      float heading = getGroupHeading(groups, iGroup);
+      float angle = aperture * groupLength; //Angle taken up by the feature
+      int dist = getMeanGroupDist(groups, iGroup); //Average distance to feature
+      float width = 2 * dist * sin((angle-dist/1000.0)/2); //Actual width of feature as seen by sonar. currently very unreliable
+      float heading = getGroupHeading(groups, iGroup); // Direction to feature.
 
       Serial.print("Feature ");
       Serial.print(iGroup);
-      Serial.print(":");
+      Serial.print(": ");
       Serial.print("angle = ");
       Serial.print(angle);
       Serial.print(", distance = ");
@@ -40,9 +42,12 @@ void detectFeatures()
       Serial.print(width);
       Serial.print(", heading = ");
       Serial.println(heading);
+
+      
       
     }
   }
+  serialPrintArray(millimeters, nDir);
 }
 
 int getGroupLength(int groups[], int group)

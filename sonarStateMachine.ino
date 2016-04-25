@@ -8,7 +8,7 @@ void sonarStateMachine()
   {
     millimeters[currDir] = calcSonarDistance();
     newSonarPulse = false;
-    serialPrintArray(millimeters, nDir);
+    //serialPrintArray(millimeters, nDir);
   }
   
   switch(sonarState)
@@ -45,6 +45,12 @@ void sonarStateMachine()
     case 4: // Set next direction and repeat
       currDir++;
       currDir = currDir%nDir;
+      
+      if(currDir == 0)
+      {
+        detectFeatures();
+      }
+      
       sonarState = 0;
       break;
   }
