@@ -40,7 +40,7 @@ unsigned long tSonar = 0;
 
 bool newSonarPulse = false;
 volatile unsigned long pulseStart, pulseEnd;
-
+bool doSonarSweep = false;
 
 
 int millimeters[nDir];
@@ -67,7 +67,9 @@ bool measuredFlag = false;
 
 long t = micros();
 
-
+const float turnRate = 0.3;
+const int robotRadius = 51;
+const int wheelRadius = 33;
 
 Servo leftMotor;
 Servo rightMotor;
@@ -101,7 +103,7 @@ void loop() {
   
 
   //leftSpeed(50);
-  //stateMachine();
+  stateMachine();
   sonarStateMachine();
   //rampGenerator();
   
