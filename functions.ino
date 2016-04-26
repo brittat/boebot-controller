@@ -38,10 +38,13 @@ void rightSpeed(float omega)
 
 void turnAngle(float deltaAngle)
 {
-  int turnTime = deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
+  float turnTime = deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
     
   leftSpeed(-turnRate/2);
   rightSpeed(turnRate/2);
+  delay(turnTime*1000);
+  leftSpeed(0);
+  rightSpeed(0);
   
 }
 

@@ -9,6 +9,8 @@ const int LEFTIRSENS = 11;
 const int RIGHTIRSENS = 4;
 const int MIDDLEIRSENS = 8;
 
+const int PINGPIN = 3;
+
 const int LEFTMOTOR = 13;
 const int RIGHTMOTOR = 12;
 const int SONARMOTOR = 10;
@@ -38,7 +40,7 @@ const long initPulseTime = 5000;
 const int nDir = 32;
 const long servoWaitTime = 100000;
 const long sonarLinger = 100000;
-const int pingPin = 3;
+
 
 int sonarState = 0;
 int currDir = 0;
@@ -96,7 +98,7 @@ void setup() {
   rightMotor.attach(RIGHTMOTOR);
   sonarMotor.attach(SONARMOTOR);
 
-  attachInterrupt(digitalPinToInterrupt(pingPin), sonarISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
 }
 
 void loop() {
