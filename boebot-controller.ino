@@ -2,10 +2,12 @@
 
 
 //Pin definitions
-const int LEFTIR = 9;
+const int LEFTIR = 10;
 const int RIGHTIR = 2;
-const int LEFTIRSENS = 10;
+const int MIDDLEIR = 7;
+const int LEFTIRSENS = 11;
 const int RIGHTIRSENS = 4;
+const int MIDDLEIRSENS = 8;
 
 const int LEFTMOTOR = 13;
 const int RIGHTMOTOR = 12;
@@ -14,6 +16,7 @@ const int SONARMOTOR = 10;
 //Sensor values
 float rightSens = 0;
 float leftSens = 0;
+float middleSens = 0;
 
 //Low pass filter stuff
 const int LPLength = 4;
@@ -23,6 +26,10 @@ int lpPointer = 0;
 
 //State machine stuff
 int state = 0;
+long waitTime = 0;
+int numberOfTurns = 0;
+int sumRight = 0;
+int sumLeft = 0;
 
 
 //Sonar state machine stuff 
@@ -80,8 +87,10 @@ void setup() {
   Serial.begin(115200);
   pinMode(LEFTIR, OUTPUT);
   pinMode(RIGHTIR, OUTPUT);
+  pinMode(MIDDLEIR, OUTPUT);
   pinMode(LEFTIRSENS, INPUT);
   pinMode(RIGHTIRSENS, INPUT);
+  pinMode(MIDDLEIRSENS, INPUT);
 
   leftMotor.attach(LEFTMOTOR);
   rightMotor.attach(RIGHTMOTOR);

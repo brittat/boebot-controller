@@ -2,8 +2,10 @@ const float closeThresh = 0.5;
 const float farThresh = 0.9;
 long delayStart = 0;
 long turnTime = 1000;
+long reverseTime = 3000;
 int turnSpeed = 75;
 int moveSpeed = 100;
+boolean beaconSearch = true;
 
 void stateMachine()
 {
@@ -44,6 +46,65 @@ void stateMachine()
       }
       break;
       
+    case 4: //Safe place found, move backwards to release cylinder  
+      leftSpeed(-moveSpeed);
+      rightSpeed(-moveSpeed);    
+      if(t - delayStart > reverseTime)
+      {
+        state = 0;
+      }      
+      break;
+
+    case 5: //Beacon search initiated, stop for scan
+      leftSpeed(0);
+      rightSpeed(0);
+      state = 6;
+      break;
+
+    case 6: //Scan for beacon
+      beaconSearch = true;
+      sumRight = sumIR(RIGHTIRSENS);
+      sumLeft = sumIR(LEFTIRSENS);
+      if (sumRight < 1 && sumLeft < 1){
+        leftSpeed(moveSpeed);
+        rightSpeed(moveSpeed);
+        delayStart = t;
+        waitTime = reverseTime;
+        numberOfTurns = 0;
+        state = 7;
+      }else if(sumRight == 1 && sumLeft == 1){ 
+        leftSpeed(-turnSpeed);
+        rightSpeed(turnSpeed);
+        numberOfTurns++;
+        if (numberOfTurns < 8){ 
+          delayStart = t;
+          waitTime = turnTime;
+          state = 7;
+        }else{ //If it has checked 360 degrees it goes into random walk
+          state = 0;
+          delayStart = t;  
+        }
+      }else if(sumRight == 1){
+        leftSpeed(-turnSpeed);
+        rightSpeed(turnSpeed);
+        delayStart = t;
+        state = 7;
+        numberOfTurns = 0;
+      }else{
+        leftSpeed(turnSpeed);
+        rightSpeed(-turnSpeed);
+        delayStart = t;
+        state = 7;
+        waitTime = turnTime;
+        numberOfTurns = 0;
+      }
+      break;
+      
+    case 7: //Wait
+      if (t - delayStart > waitTime){
+        state = 6;
+      }
+      break;
   }
 }
 

@@ -31,7 +31,7 @@ void detectFeatures()
       float width = 2 * dist * sin((angle-dist/1000.0)/2); //Actual width of feature as seen by sonar. currently very unreliable
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
 
-      if(angle >= 0.58 && angle <= 0.89 && distance > 350)
+      if(angle >= 0.58 && angle <= 0.89 && dist > 350)
       {
         Serial.print("Potential target! ");
       }

@@ -40,8 +40,8 @@ void turnAngle(float deltaAngle)
 {
   int turnTime = deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
     
-  leftSpeed(-turnRate/2)
-  rightSpeed(turnRate/2)
+  leftSpeed(-turnRate/2);
+  rightSpeed(turnRate/2);
   
 }
 
@@ -51,10 +51,12 @@ int sumIR(int irID)
 {
   int reading = 0;
   int nPoints = 10;
+  int scanTime = 500; //ms
   for (int i = 0; i < nPoints; i++)
   {
     int ir = digitalRead(irID);
-    reading = reading + ir;    
+    reading = reading + ir;
+    delay(scanTime/nPoints);    
   }
   return reading;
 }
