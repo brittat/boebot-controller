@@ -127,11 +127,6 @@ void loop() {
   //turnAngle(-1.57);
   //delay(1000);
 
-  int amp = 7;
-  int r = 0;
-  int l = -1;
-  leftSpeed(amp*sin(t/1000000)+l);
-  rightSpeed(amp*sin(t/1000000)+r);
   
 }
 

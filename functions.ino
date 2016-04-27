@@ -26,22 +26,33 @@ float getDistanceIR(int outPin, int sensPin)
 // Wrappers for servo motors
 void leftSpeed(int spd)
 {
-  leftMotor.writeMicroseconds(1500 + spd);
+  leftMotor.writeMicroseconds(1498 + spd);
 }
 
 void rightSpeed(int spd)
 {
-  rightMotor.writeMicroseconds(1500 - spd);
+  rightMotor.writeMicroseconds(1499 - spd);
 }
 
-void turnAngle(float deltaAngle)
+void turn(float deltaAngle)
 {
-  int sign = (deltaAngle > 0) - (deltaAngle < 0);
-  float turnTime = sign*deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
-  Serial.println(turnTime);
-  leftSpeed(-sign*turnRate/2.0);
-  rightSpeed(sign*turnRate/2.0);
-  delay(turnTime*1000);
+  angleSign =  sign(deltaAngle);
+  deltaAngle = deltaAngle % (2 * 3.1416);
+  //float turnTime = sign*deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
+  float turnTime = angleSign*deltaAngle*1000000;
+  turnSetTime(turnTime, angleSign)
+}
+
+
+void turnSetTime(int turnTime, int angleSign)
+{
+  turnStart = micros();
+  while(micros() - turnStart < turnTime)
+  {
+    leftSpeed(-angleSign*turnRate);
+    rightSpeed(angleSign*turnRate);
+  }
+
   leftSpeed(0);
   rightSpeed(0);
   
@@ -139,6 +150,10 @@ int arrayMin(int array[], int l)
   return minVal;
 }
 
+int sign(float checkSignFloat) 
+{
+  return (checkSignFloat > 0) - (checkSignFloat < 0);
+}
 // Takes sum of array, used for low pass filter
 float arraySum(float array[], int l)
 {
