@@ -4,10 +4,10 @@
 //Pin definitions
 const int LEFTIR = 10;
 const int RIGHTIR = 2;
-const int MIDDLEIR = 7;
+const int MIDDLEIR = 2;//7
 const int LEFTIRSENS = 11;
 const int RIGHTIRSENS = 4;
-const int MIDDLEIRSENS = 8;
+const int MIDDLEIRSENS = 4;//8
 
 const int PINGPIN = 3;
 
@@ -99,6 +99,7 @@ void setup() {
   sonarMotor.attach(SONARMOTOR);
 
   attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
+  
   Serial.println("N IR_left IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
@@ -121,10 +122,10 @@ void loop() {
   //sonarStateMachine();
   rampGenerator();
 
-//  turnAngle(1.57);
-//  delay(1000);
-//  turnAngle(-1.57);
-//  delay(1000);
+  turnAngle(1.57);
+  delay(1000);
+  turnAngle(-1.57);
+  delay(1000);
   
 }
 

@@ -38,8 +38,7 @@ void rightSpeed(float omega)
 
 void turnAngle(float deltaAngle)
 {
-  int sign = 1;
-  if(deltaAngle < 0){sign = -1;}
+  int sign = (deltaAngle > 0) - (deltaAngle < 0);
   float turnTime = sign*deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
   Serial.println(turnTime);
   leftSpeed(-sign*turnRate/2.0);
