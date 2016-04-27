@@ -3,10 +3,10 @@
 
 //Pin definitions
 const int LEFTIR = 10;
-const int RIGHTIR = 2;
+const int RIGHTIR = 7;
 const int MIDDLEIR = 2;//7
 const int LEFTIRSENS = 11;
-const int RIGHTIRSENS = 4;
+const int RIGHTIRSENS = 8;
 const int MIDDLEIRSENS = 4;//8
 
 const int PINGPIN = 3;
@@ -122,10 +122,16 @@ void loop() {
   //sonarStateMachine();
   rampGenerator();
 
-  turnAngle(1.57);
-  delay(1000);
-  turnAngle(-1.57);
-  delay(1000);
+  //turnAngle(1.57);
+  //delay(1000);
+  //turnAngle(-1.57);
+  //delay(1000);
+
+  int amp = 7;
+  int r = 0;
+  int l = -1;
+  leftSpeed(amp*sin(t/1000000)+l);
+  rightSpeed(amp*sin(t/1000000)+r);
   
 }
 

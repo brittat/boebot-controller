@@ -24,16 +24,14 @@ float getDistanceIR(int outPin, int sensPin)
 }
 
 // Wrappers for servo motors
-void leftSpeed(float omega)
+void leftSpeed(int spd)
 {
-  int servoSignal = 1500 + 2.5*8.6 * omega;
-  leftMotor.writeMicroseconds(servoSignal);
+  leftMotor.writeMicroseconds(1500 + spd);
 }
 
-void rightSpeed(float omega)
+void rightSpeed(int spd)
 {
-  int servoSignal = 1500 - (2.5*9.5 * omega-3);
-  rightMotor.writeMicroseconds(servoSignal);
+  rightMotor.writeMicroseconds(1500 - spd);
 }
 
 void turnAngle(float deltaAngle)
