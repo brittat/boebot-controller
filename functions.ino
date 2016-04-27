@@ -26,22 +26,24 @@ float getDistanceIR(int outPin, int sensPin)
 // Wrappers for servo motors
 void leftSpeed(float omega)
 {
-  int servoSignal = 1500 + 0.0086 * omega + 0.0468;
+  int servoSignal = 1500 + 2.5*8.6 * omega;
   leftMotor.writeMicroseconds(servoSignal);
 }
 
 void rightSpeed(float omega)
 {
-  int servoSignal = 1500 - (0.0095 * omega + 0.0245);
+  int servoSignal = 1500 - (2.5*9.5 * omega-3);
   rightMotor.writeMicroseconds(servoSignal);
 }
 
 void turnAngle(float deltaAngle)
 {
-  float turnTime = deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
-    
-  leftSpeed(-turnRate/2);
-  rightSpeed(turnRate/2);
+  int sign = 1;
+  if(deltaAngle < 0){sign = -1;}
+  float turnTime = sign*deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
+  Serial.println(turnTime);
+  leftSpeed(-sign*turnRate/2.0);
+  rightSpeed(sign*turnRate/2.0);
   delay(turnTime*1000);
   leftSpeed(0);
   rightSpeed(0);
@@ -69,13 +71,13 @@ int sumIR(int irID)
 void sonarPulse()
 {
   noInterrupts();
-  pinMode(pingPin, OUTPUT);
-  digitalWrite(pingPin, LOW);
+  pinMode(PINGPIN, OUTPUT);
+  digitalWrite(PINGPIN, LOW);
   delayMicroseconds(2);
-  digitalWrite(pingPin, HIGH);
+  digitalWrite(PINGPIN, HIGH);
   delayMicroseconds(5);
-  digitalWrite(pingPin, LOW);
-  pinMode(pingPin, INPUT);
+  digitalWrite(PINGPIN, LOW);
+  pinMode(PINGPIN, INPUT);
   interrupts();
 }
 
@@ -84,7 +86,7 @@ void sonarPulse()
 //It is run every time an edge is detected on the sonar data line.
 void sonarISR() 
 {
-  if(digitalRead(pingPin) == HIGH)
+  if(digitalRead(PINGPIN) == HIGH)
   {
     pulseStart = micros();
   } else 

@@ -3,6 +3,15 @@
 
 void rampGenerator()
 {
+  if(t%2048 == 0)
+  {
+    Serial.print("D ");
+    Serial.print(t/1000);
+    Serial.print(" ");
+    Serial.print(IRDistLeft);
+    Serial.print(" ");
+    Serial.println(IRDistRight);
+  }
   if(t-lastToneChange >= rampStepLength)
   {
     measuredFlag = false;

@@ -21,8 +21,8 @@ void sonarStateMachine()
       break;
     case 0: // Move servo into position
       sonarMotor.write(currDir*dirAngle);
-      pinMode(pingPin, OUTPUT);          // Set pin to OUTPUT
-      digitalWrite(pingPin, LOW);
+      pinMode(PINGPIN, OUTPUT);          // Set pin to OUTPUT
+      digitalWrite(PINGPIN, LOW);
       startDelay = t;
       if(currDir == 0)
       {

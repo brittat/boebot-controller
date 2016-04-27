@@ -76,7 +76,7 @@ bool measuredFlag = false;
 
 long t = micros();
 
-const float turnRate = 0.3;
+const float turnRate = 2;
 const int robotRadius = 51;
 const int wheelRadius = 33;
 
@@ -99,6 +99,9 @@ void setup() {
   sonarMotor.attach(SONARMOTOR);
 
   attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
+  Serial.println("N IR_left IR_right");
+  Serial.println("L 0 60");
+  Serial.println("!");
 }
 
 void loop() {
@@ -114,9 +117,14 @@ void loop() {
   
 
   //leftSpeed(50);
-  stateMachine();
-  sonarStateMachine();
-  //rampGenerator();
+  //stateMachine();
+  //sonarStateMachine();
+  rampGenerator();
+
+//  turnAngle(1.57);
+//  delay(1000);
+//  turnAngle(-1.57);
+//  delay(1000);
   
 }
 
