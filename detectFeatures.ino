@@ -28,7 +28,9 @@ void detectFeatures()
     {
       float angle = aperture * groupLength; //Angle taken up by the feature
       int dist = getMeanGroupDist(groups, iGroup); //Average distance to feature
-      float width = 2 * dist * sin((angle-dist/1000.0)/2); //Actual width of feature as seen by sonar. currently very unreliable
+      //float width = 2 * dist * sin((angle-dist/1000.0)/2); //Actual width of feature as seen by sonar. currently very unreliable
+      float theta = groupLength*aperture/2;
+      float width = 2*dist*tan(theta);
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
 
       if(angle >= 0.58 && angle <= 1 && dist > 350 && dist < 3000)
