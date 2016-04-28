@@ -36,7 +36,7 @@ void detectFeatures()
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
       float width2 = P0 + P1*dist;
       
-      if(angle >= 0.58 && angle <= 1 && dist > 350 && dist < 3000)
+      if(dist < 2000 && abs(width-width2) < 150)
       {
         Serial.print("Potential target! ");
         targetHeading = heading;
@@ -98,7 +98,7 @@ float getGroupHeading(int groups[], int group)
       gLength += 1;
     }
   }
-  return aperture*heading/gLength - M_PI_2;
+  return -aperture*heading/gLength + M_PI_2;
 }
 
 

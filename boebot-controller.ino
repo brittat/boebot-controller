@@ -131,9 +131,9 @@ void loop() {
   doSonarSweep = true;  
   sonarStateMachine();
 
-  /*if (targetHeading != 0)
+  if (targetHeading != 0)
   {
-    turn(-targetHeading);
+    turn(targetHeading);
     targetHeading = 0;  
     rightSpeed(30);
     leftSpeed(33);
@@ -141,7 +141,7 @@ void loop() {
     rightSpeed(0);
     leftSpeed(0);
     
-  }*/
+  }
   //rampGenerator();  
 }
 
