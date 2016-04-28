@@ -65,13 +65,21 @@ const float divider = (maxFreq - baseFreq)/freqStep;
 const long rampStepLength = 4000;
 const long IRWaitTime = 1000;
 long currFreq = baseFreq;
-enum IRDirection {LEFT, RIGHT, STOPLEFT, STOPRIGHT};
-IRDirection currIRDir = STOPLEFT;
+
+const int NUM_IR_DIR = 3;
+enum IRDirection {LEFT, MID, RIGHT};
+IRDirection currIRDir = LEFT;
+
+int IRDists[NUM_IR_DIR];
+int tempIRDists[NUM_IR_DIR];
+
 
 int IRDistLeft = 0;
+int IRDistMid = 0;
 int IRDistRight = 0;
 
 int tempIRLeft = 0;
+int tempIRMid = 0;
 int tempIRRight = 0;
 
 bool measuredFlag = false;
