@@ -1,87 +1,44 @@
-
-// Needs some work still, we can use getDistanceIR for now
-
-void rampGenerator()
-{
-  if(t%2048 == 0)
-  {
-    Serial.print("D ");
-    Serial.print(t/1000);
-    Serial.print(" ");
-    Serial.print(IRDistLeft);
-    Serial.print(" ");
-    Serial.println(IRDistRight);
-  }
-  if(t-lastToneChange >= rampStepLength)
-  {
-    measuredFlag = false;
-    lastToneChange = t;
-    currFreq += freqStep;
-
-    if(currFreq > maxFreq && currIRDir == RIGHT)
-    {
-      
-      currFreq = baseFreq;
-      IRDistLeft = tempIRLeft;
-      tempIRLeft = 0;
-      currIRDir = STOPRIGHT;
-    }
-
-    
-    if(currFreq > maxFreq && currIRDir == LEFT)
-    {
-      IRDistRight = tempIRRight;
-      tempIRRight = 0;
-      currFreq = baseFreq;
-      currIRDir = STOPLEFT;
-    }
-    switch(currIRDir)
-    {
-      case STOPLEFT:
-        noTone(RIGHTIR);
-        noTone(LEFTIR);
-        currIRDir = RIGHT;
-        break;
-        
-      case STOPRIGHT:
-        noTone(RIGHTIR);
-        noTone(LEFTIR);
-        currIRDir = LEFT;
-        break;
-        
-      case LEFT:
-        tone(LEFTIR, currFreq);
-        break;
-        
-      case RIGHT:
-        tone(RIGHTIR, currFreq);
-        break;
-    }
-  }
-  if(currIRDir == LEFT)
-  {
-    
-    if(t-lastToneChange >= IRWaitTime && !measuredFlag)
-    {
-      
-      if(digitalRead(LEFTIRSENS))
-      {      
-       measuredFlag == true;
-       tempIRLeft = tempIRLeft + 1;
-      }
-    }
-  }
-  else if (currIRDir == RIGHT)
-  {
-    
-    if(t-lastToneChange >= IRWaitTime && !measuredFlag)
-    {
-      if(digitalRead(RIGHTIRSENS))
-      {
-        measuredFlag == true;
-        tempIRRight = tempIRRight + 1;
-      }
-    }
-  }
-}
-  
+//
+//// Needs some work still, we can use getDistanceIR for now
+//const int IR_PINS[] = {LEFTIR, MIDDLEIR, RIGHTIR};
+//const int IR_SENS_PINS[] = {LEFTIRSENS, MIDDLEIRSENS, RIGHTIRSENS};
+//void rampGenerator()
+//{
+////  if(t%2048 == 0)
+////  {
+////    Serial.print("D ");
+////    Serial.print(t/1000);
+////    Serial.print(" ");
+////    Serial.print(IRDistLeft);
+////    Serial.print(" ");
+////    Serial.println(IRDistRight);
+////  }
+//
+//  tone(IR_PINS[currIRDir], currFreq);
+//  
+//  if(t-lastToneChange >= rampStepLength)
+//  {
+//    measuredFlag = false;
+//    lastToneChange = t;
+//    currFreq += freqStep;
+//
+//    if(currFreq > maxFreq)
+//    {      
+//      currFreq = baseFreq;      
+//      currIRDir = (currIRDir + 1) % NUM_IR_DIR;
+//
+//      noTone(RIGHTIR);
+//      noTone(MIDDLEIR);
+//      noTone(LEFTIR);
+//
+//      IRDists[currIRDir] = tempIRDists[currIRDir];
+//      tempIRDists[currIRDir] = 0;
+//      
+//    }
+//  }
+//
+//  if(t-lastToneChange >= IRWaitTime && !measuredFlag && digitalRead(IR_SENS_PINS[currIRDir]))
+//  {
+//     measuredFlag == true;
+//     tempIRDists[currIRDir]++;
+//  }
