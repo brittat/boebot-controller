@@ -10,13 +10,12 @@ void sonarStateMachine()
     newSonarPulse = false;
     //serialPrintArray(millimeters, nDir);
   }
-  
   switch(sonarState)
   {
     case -1:
       if(doSonarSweep)
       {
-        state = 0;
+        sonarState = 0;
       }
       break;
     case 0: // Move servo into position

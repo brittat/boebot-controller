@@ -1,5 +1,5 @@
 #include <Servo.h>
-
+#include <math.h>
 
 //Pin definitions
 const int LEFTIR = 10;
@@ -76,9 +76,11 @@ bool measuredFlag = false;
 
 long t = micros();
 
-const float turnRate = 2;
+const float turnRate = 40;
 const int robotRadius = 51;
 const int wheelRadius = 33;
+
+float targetHeading = 0;
 
 Servo leftMotor;
 Servo rightMotor;
@@ -119,15 +121,22 @@ void loop() {
 
   //leftSpeed(50);
   //stateMachine();
-  //sonarStateMachine();
-  rampGenerator();
-
-  //turnAngle(1.57);
-  //delay(1000);
-  //turnAngle(-1.57);
-  //delay(1000);
-
   
+  doSonarSweep = true;  
+  sonarStateMachine();
+
+  if (targetHeading != 0)
+  {
+    turn(-targetHeading);
+    targetHeading = 0;  
+    rightSpeed(30);
+    leftSpeed(33);
+    delay(2000);
+    rightSpeed(0);
+    leftSpeed(0);
+    
+  }
+  //rampGenerator();  
 }
 
 
