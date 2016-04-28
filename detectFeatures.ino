@@ -1,8 +1,8 @@
 const int maxFeatureDepth = 30;
 const float aperture = 3.14/nDir;
 
-const float P0 = 147.2347;
-const float P1 = 0.6771;
+const float P0 = 87.07;
+const float P1 = 0.8082;
 
 void detectFeatures()
 {
