@@ -34,27 +34,10 @@ void rightSpeed(int spd)
   rightMotor.writeMicroseconds(1499 - spd);
 }
 
-//void turnTenDegrees()
-//{
-//  long turnTime = 80;
-//  long turnStart = micros();
-//  Serial.println(turnStart);
-//  delay(1000);
-//  while(micros() - turnStart < turnTime)
-//  {
-//    leftSpeed(-angleSign*turnRate);
-//    rightSpeed(angleSign*turnRate);
-//  }
-//
-//  leftSpeed(0);
-//  rightSpeed(0); 
-//}
-
 void turn(float deltaAngle)
 {
   int angleSign =  sign(deltaAngle);
   deltaAngle = fmod(deltaAngle, 2 * M_PI);
-  //float turnTime = sign*deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
   long turnTime = angleSign*deltaAngle*1000000;
 
   if(angleSign > 0)
@@ -63,18 +46,12 @@ void turn(float deltaAngle)
   }else{
     turnTime = turnTime*0.715;
   }
-  
-  Serial.println(deltaAngle);
-  Serial.println(angleSign);
-  Serial.println(turnTime);
   turnSetTime(turnTime, angleSign);
 }
 
-void turnSetTime(int turnTime, int angleSign)
+void turnSetTime(long turnTime, int angleSign)
 {
   long turnStart = micros();
-  Serial.println(turnStart);
-  
   while(micros() - turnStart < turnTime)
   {
     leftSpeed(-angleSign*turnRate);
