@@ -52,6 +52,8 @@ void detectFeatures()
       Serial.print(dist);
       Serial.print(", width = ");
       Serial.print(width);
+      Serial.print(", width2 = ");
+      Serial.print(width2);
       Serial.print(", heading = ");
       Serial.println(heading);
     }
