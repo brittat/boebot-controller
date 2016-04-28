@@ -3,11 +3,11 @@
 
 //Pin definitions
 const int LEFTIR = 10;
-const int RIGHTIR = 7;
-const int MIDDLEIR = 2;//7
+const int RIGHTIR = 2;
+const int MIDDLEIR =7;
 const int LEFTIRSENS = 11;
-const int RIGHTIRSENS = 8;
-const int MIDDLEIRSENS = 4;//8
+const int RIGHTIRSENS = 4;
+const int MIDDLEIRSENS = 8;
 
 const int PINGPIN = 3;
 
@@ -32,6 +32,8 @@ long waitTime = 0;
 int numberOfTurns = 0;
 int sumRight = 0;
 int sumLeft = 0;
+int irSum = 0; //Robustness for finding safe zone
+boolean isReversing = false;
 
 
 //Sonar state machine stuff 
@@ -98,11 +100,12 @@ void setup() {
   rightMotor.attach(RIGHTMOTOR);
   sonarMotor.attach(SONARMOTOR);
 
-  attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
+ /* attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
   
   Serial.println("N IR_left IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
+  */
 }
 
 void loop() {
@@ -118,10 +121,13 @@ void loop() {
   
 
   //leftSpeed(50);
-  //stateMachine();
+  stateMachine();
   //sonarStateMachine();
-  rampGenerator();
+  //rampGenerator();
 
+  int ir = getIrRead(MIDDLEIR,MIDDLEIRSENS);
+  Serial.println(ir);
+  delay(100);
   //turnAngle(1.57);
   //delay(1000);
   //turnAngle(-1.57);

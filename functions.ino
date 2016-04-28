@@ -36,15 +36,15 @@ void rightSpeed(int spd)
 
 void turn(float deltaAngle)
 {
-  angleSign =  sign(deltaAngle);
-  deltaAngle = deltaAngle % (2 * 3.1416);
+  //angleSign =  sign(deltaAngle);
+  //deltaAngle = deltaAngle % (2 * 3.1416);
   //float turnTime = sign*deltaAngle*2*robotRadius/(wheelRadius*turnRate); 
-  float turnTime = angleSign*deltaAngle*1000000;
-  turnSetTime(turnTime, angleSign)
+ // float turnTime = angleSign*deltaAngle*1000000;
+  //turnSetTime(turnTime, angleSign)
 }
 
 
-void turnSetTime(int turnTime, int angleSign)
+/*void turnSetTime(int turnTime, int angleSign)
 {
   turnStart = micros();
   while(micros() - turnStart < turnTime)
@@ -56,9 +56,15 @@ void turnSetTime(int turnTime, int angleSign)
   leftSpeed(0);
   rightSpeed(0);
   
+}*/
+
+int getIrRead(int diodID, int sensorID)
+{
+  tone(diodID, 15000, 8);                // Frequency to be tested in arena
+  delay(1);                         // Wait 1 ms
+  int ir = digitalRead(sensorID);         // IR receiver -> ir variable
+  return ir;
 }
-
-
 
 int sumIR(int irID)
 {
@@ -121,7 +127,7 @@ void serialPrintArray(int array[], int l)
     Serial.print(array[i]);
     Serial.print(' ');
   }
-  Serial.println();
+  Serial.println();  
 }
 
 int arrayMax(int array[], int l)
