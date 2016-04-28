@@ -70,8 +70,7 @@ void turn(float deltaAngle)
   turnSetTime(turnTime, angleSign);
 }
 
-
-void turnSetTime(long turnTime, int angleSign)
+void turnSetTime(int turnTime, int angleSign)
 {
   long turnStart = micros();
   Serial.println(turnStart);
@@ -87,7 +86,13 @@ void turnSetTime(long turnTime, int angleSign)
   
 }
 
-
+int getIrRead(int diodID, int sensorID)
+{
+  tone(diodID, 15000, 8);                // Frequency to be tested in arena
+  delay(1);                         // Wait 1 ms
+  int ir = digitalRead(sensorID);         // IR receiver -> ir variable
+  return ir;
+}
 
 int sumIR(int irID)
 {
@@ -150,7 +155,7 @@ void serialPrintArray(int array[], int l)
     Serial.print(array[i]);
     Serial.print(' ');
   }
-  Serial.println();
+  Serial.println();  
 }
 
 int arrayMax(int array[], int l)
