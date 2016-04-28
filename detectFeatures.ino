@@ -1,6 +1,9 @@
 const int maxFeatureDepth = 30;
 const float aperture = 3.14/nDir;
 
+const float P0 = 0.6771;
+const float P1 = 147.2347;
+
 
 void detectFeatures()
 {
@@ -30,9 +33,10 @@ void detectFeatures()
       int dist = getMeanGroupDist(groups, iGroup); //Average distance to feature
       //float width = 2 * dist * sin((angle-dist/1000.0)/2); //Actual width of feature as seen by sonar. currently very unreliable
       float theta = groupLength*aperture/2;
-      float width = 2*dist*tan(theta);
+      float width = 2*dist*tan(theta); //This one is approximately linear against the distance to the group
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
-
+      float width2 = P0 + P1*dist;
+      
       if(angle >= 0.58 && angle <= 1 && dist > 350 && dist < 3000)
       {
         Serial.print("Potential target! ");
