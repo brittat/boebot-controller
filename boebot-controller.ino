@@ -44,7 +44,7 @@ const long sonarLinger = 100000;
 
 int sonarState = 0;
 int currDir = 0;
-unsigned long startDelay = 0;
+unsigned long sonarDelay = 0;
 unsigned long tSonar = 0;
 
 bool newSonarPulse = false;
@@ -63,14 +63,20 @@ const float divider = (maxFreq - baseFreq)/freqStep;
 const long rampStepLength = 4000;
 const long IRWaitTime = 1000;
 long currFreq = baseFreq;
-enum IRDirection {LEFT, RIGHT, STOPLEFT, STOPRIGHT};
-IRDirection currIRDir = STOPLEFT;
 
 int IRDistLeft = 0;
 int IRDistRight = 0;
 
 int tempIRLeft = 0;
 int tempIRRight = 0;
+
+const int NUM_IR_DIR = 3;
+
+enum IRDirection {LEFT, MID, RIGHT};
+IRDirection currIRDir = LEFT;
+
+int IRDists[NUM_IR_DIR];
+int tempIRDists[NUM_IR_DIR];
 
 bool measuredFlag = false;
 

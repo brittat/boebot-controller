@@ -22,16 +22,16 @@ void sonarStateMachine()
       sonarMotor.write(currDir*dirAngle);
       pinMode(PINGPIN, OUTPUT);          // Set pin to OUTPUT
       digitalWrite(PINGPIN, LOW);
-      startDelay = t;
+      sonarDelay = t;
       if(currDir == 0)
       {
-        startDelay += 1000000; //Wait an extra second if turning back
+        sonarDelay += 1000000; //Wait an extra second if turning back
       }
       sonarState = 1;
       break;
       
     case 1: //Wait for servo
-      if(t - startDelay > servoWaitTime)
+      if(t - sonarDelay > servoWaitTime)
       {
         sonarState = 2;
       }
@@ -40,12 +40,12 @@ void sonarStateMachine()
 
     case 2: // Send init pulse
       sonarPulse();
-      startDelay = t;
+      sonarDelay = t;
       sonarState = 3;
       break;
 
     case 3:
-      if(t-startDelay > sonarLinger)
+      if(t-sonarDelay > sonarLinger)
       {
         sonarState = 4;
       }
