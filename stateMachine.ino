@@ -3,39 +3,48 @@ const float farThresh = 0.9;
 long delayStart = 0;
 long turnTime = 1000;
 long reverseTime = 3000;
-int turnSpeed = 50;
-int moveSpeed = 75;
-boolean beaconSearch = true;
+int turnSpeed = 30;
+int moveSpeed = 50;
+
 
 void stateMachine()
 {
   long t = millis();
-  int ir = getIrRead(MIDDLEIR,MIDDLEIRSENS);
-  irSum = (ir + irSum)*ir;
-  if (irSum>3 && !isReversing){
+  //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
+  //irSum = (ir + irSum)*ir;
+  /*if (irSum>3 && !isReversing){
     state = 4;
+    beaconSearch = false;
     isReversing = true;
     leftSpeed(0);
     rightSpeed(0);
     delay(100);
     delayStart = t;
-  }
+  }*/
+  if (randomWalk && t - delayStart > reverseTime*2) // Random walk when looking for beacon
+    {
+      state = 5;
+      randomWalk = false;
+    }
   switch(state)
   {
     case 0:
       leftSpeed(moveSpeed);
       rightSpeed(moveSpeed);
       rightSens = getIrRead(RIGHTIR,RIGHTIRSENS);
+      delay(5);
       leftSens = getIrRead(LEFTIR,LEFTIRSENS);
+      Serial.print(leftSens);
+      Serial.println(rightSens);
       if(rightSens < 1) //Too far right
       {
-        //state = 1;
+        state = 1;
         turnTime = random(300, 1500);
         delayStart = t;
       }
       else if (leftSens < 1) //Too far left
       {
-        //state = 2;
+        state = 2;
         turnTime = random(300, 1500);
         delayStart = t;
       }
@@ -83,14 +92,16 @@ void stateMachine()
       beaconSearch = true;
       sumRight = sumIR(RIGHTIRSENS);
       sumLeft = sumIR(LEFTIRSENS);
-      if (sumRight < 1 && sumLeft < 1){
+      //Serial.print(sumLeft);
+      //Serial.println(sumRight);
+      if (sumRight < 100 && sumLeft < 100){
         leftSpeed(moveSpeed);
         rightSpeed(moveSpeed);
         delayStart = t;
-        waitTime = reverseTime;
+        waitTime = reverseTime*2;
         numberOfTurns = 0;
         state = 7;
-      }else if(sumRight == 1 && sumLeft == 1){ 
+      }else if(sumRight == 100 && sumLeft == 100){ 
         leftSpeed(-turnSpeed);
         rightSpeed(turnSpeed);
         numberOfTurns++;
@@ -99,10 +110,12 @@ void stateMachine()
           waitTime = turnTime;
           state = 7;
         }else{ //If it has checked 360 degrees it goes into random walk
+          randomWalk = true;
           state = 0;
-          delayStart = t;  
+          delayStart = t;
+          numberOfTurns = 0;  
         }
-      }else if(sumRight == 1){
+      }else if(sumRight == 100){
         leftSpeed(-turnSpeed);
         rightSpeed(turnSpeed);
         delayStart = t;
@@ -120,7 +133,7 @@ void stateMachine()
       
     case 7: //Wait
       if (t - delayStart > waitTime){
-        state = 6;
+        state = 5;
       }
       break;
   }

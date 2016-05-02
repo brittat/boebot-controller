@@ -19,6 +19,8 @@ const int SONARMOTOR = 10;
 float rightSens = 0;
 float leftSens = 0;
 float middleSens = 0;
+int rightSens2 = 0;
+int leftSens2 = 0;
 
 //Low pass filter stuff
 const int LPLength = 4;
@@ -28,12 +30,14 @@ int lpPointer = 0;
 
 //State machine stuff
 int state = 0;
-long waitTime = 0;
+long waitTime = 3000;
 int numberOfTurns = 0;
 int sumRight = 0;
 int sumLeft = 0;
 int irSum = 0;
 boolean isReversing = false;
+boolean beaconSearch = false;
+boolean randomWalk = false;
 
 
 //Sonar state machine stuff 
@@ -125,9 +129,9 @@ void loop() {
 //  Serial.println(t-oldT);
 //
 //  Serial.print(" sonarState = ");
-  int irtest = getIrRead(MIDDLEIR,MIDDLEIRSENS);
-  Serial.println(irtest);
-  delay(100);
+  //int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
+  //Serial.println(irtest);
+  //delay(100);
 
   //leftSpeed(50);
   //Serial.println(irSum);
