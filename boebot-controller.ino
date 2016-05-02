@@ -89,6 +89,7 @@ const int robotRadius = 51;
 const int wheelRadius = 33;
 
 float targetHeading = 0;
+int targetDistance = 0;
 
 Servo leftMotor;
 Servo rightMotor;
@@ -125,28 +126,33 @@ void loop() {
 //  Serial.println(t-oldT);
 //
 //  Serial.print(" sonarState = ");
-  int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
+  /*int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
   Serial.println(irtest);
   delay(100);
 
   //leftSpeed(50);
   //Serial.println(irSum);
   //stateMachine();
- /* 
+*/
   doSonarSweep = true;  
   sonarStateMachine();
+
 
   if (targetHeading != 0)
   {
     turn(targetHeading);
     targetHeading = 0;  
-    rightSpeed(30);
-    leftSpeed(33);
-    delay(2000);
+    //rightSpeed(32);
+    //leftSpeed(35);
+    delay(targetDistance*5);
     rightSpeed(0);
     leftSpeed(0);
-    
-  }*/
+    doSonarSweep = false; 
+  }
+
+
+
+  
   //rampGenerator();  
 }
 

@@ -29,6 +29,8 @@ void detectFeatures()
     }
   }
   Serial.println("Features found:");
+  float maxSymmComp = 0;
+  int targetGroup = 0;
   for(int iGroup = 1; iGroup <= cGroup; iGroup++)
   {
     int groupLength = getGroupLength(groups, iGroup);
@@ -42,18 +44,30 @@ void detectFeatures()
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
       float width2 = P0 + P1*dist;
       float angle2 = p0 + p1*dist;
+      int maximumDistDiff = getMaxDiff(groups, iGroup);
+      float groupSymmComparison = getSymmComparison(groups, iGroup);
       
-      if(dist < 2000 && abs(width-width2) < 150 && abs(angle-angle2) < 0.2)
+      if(dist < 2000 && abs(width-width2) < 150 && groupSymmComparison > 100)
       {
         Serial.print("Potential target! ");
-        targetHeading = heading;
+
+        if (groupSymmComparison > maxSymmComp)
+        {
+          Serial.print("New potential target! ");
+          targetHeading = heading;
+          targetDistance = dist;
+          maxSymmComp = groupSymmComparison;
+        }
+        
       }
-      
+
       Serial.print("Feature ");
       Serial.print(iGroup);
       Serial.print(": ");
       Serial.print("angle = ");
       Serial.print(angle);
+      Serial.print(" , angle2 = ");
+      Serial.print(angle2);
       Serial.print(", distance = ");
       Serial.print(dist);
       Serial.print(", width = ");
@@ -61,7 +75,9 @@ void detectFeatures()
       Serial.print(", width2 = ");
       Serial.print(width2);
       Serial.print(", heading = ");
-      Serial.println(heading);
+      Serial.print(heading);
+      Serial.print(", symmetry comparison value = ");
+      Serial.println(maxSymmComp);
     }
   }
   serialPrintArray(millimeters, nDir);
@@ -105,7 +121,61 @@ float getGroupHeading(int groups[], int group)
       gLength += 1;
     }
   }
-  return -aperture*heading/gLength + M_PI_2;
+  return -aperture*(heading/gLength+0.5) + M_PI_2;
+}
+
+int getMaxDiff(int groups[], int group)
+{
+  int minDist = 10000;
+  int maxDist = 0;
+  for(int i = 0; i < nDir; i++)
+  {
+    if(groups[i] == group)
+    {
+      if (millimeters[i] > maxDist)
+      {
+        maxDist = millimeters[i];
+      }
+
+      if (millimeters[i] < minDist)
+      {
+        minDist = millimeters[i];
+      }
+    }
+  }
+  return maxDist - minDist;
+}
+
+float getSymmComparison(int groups[], int group)
+{
+  float maxDiff = getMaxDiff(groups, group);
+  int lengthOfGroup = getGroupLength(groups, group);
+  float m = sign(maxDiff)*maxDiff;
+  float symmVec[lengthOfGroup];
+  float tmpVec[lengthOfGroup];
+  //serialPrintArray(int(tmpVec), lengthOfGroup)
+  int j = 0;
+  for(int i = 0; i < nDir; i++)
+  {
+
+    if(groups[i] == group)
+    {
+      tmpVec[j] = millimeters[i];
+      j++;
+    }
+  }
+
+  float maxDistOfGroup = arrayMaxFloat(tmpVec, lengthOfGroup);
+  float minDistOfGroup = arrayMinFloat(tmpVec, lengthOfGroup);
+  float symmVal=0; 
+  for(int i = 0; i < lengthOfGroup; i++)
+  {
+
+    symmVal = symmVal + pow((tmpVec[i]-tmpVec[lengthOfGroup-i-1])/(maxDistOfGroup-minDistOfGroup),2);  
+
+  }
+return (float(lengthOfGroup)*m)/symmVal;
+  
 }
 
 

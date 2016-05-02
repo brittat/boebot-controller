@@ -44,7 +44,7 @@ void turn(float deltaAngle)
   {
     turnTime = turnTime*0.64;
   }else{
-    turnTime = turnTime*0.715;
+    turnTime = turnTime*0.64;
   }
   turnSetTime(turnTime, angleSign);
 }
@@ -135,31 +135,62 @@ void serialPrintArray(int array[], int l)
   Serial.println();  
 }
 
-int arrayMax(int array[], int l)
+int arrayMax(int list[], int l)
 {
   int maxVal = 0;
   for(int i = 0; i < l; i++)
   {
-    if(array[i] > maxVal)
+    if(list[i] > maxVal)
     {
-      maxVal = array[i];
+      maxVal = list[i];
     }
   }
   return maxVal;
 }
 
-int arrayMin(int array[], int l)
+int arrayMin(int list[], int l)
 {
-  int minVal = array[0];
+  int minVal = list[0];
   for(int i = 1; i < l; i++)
   {
-    if(array[i] < minVal)
+    if(list[i] < minVal)
     {
-      minVal = array[i];
+      minVal = list[i];
     }
   }
   return minVal;
 }
+
+
+float arrayMaxFloat(float list[], int l)
+{
+  float maxVal = 0;
+
+  for(int i = 0; i < l; i++)
+  {
+    if(list[i] > maxVal)
+    {
+      maxVal = list[i];
+    }
+  }
+  return maxVal;
+}
+
+float arrayMinFloat(float list[], int l)
+{
+  float minVal = list[0];
+
+  for(int i = 1; i < l; i++)
+  {
+    if(list[i] < minVal)
+    {
+      minVal = list[i];
+    }
+  }
+  return minVal;
+}
+
+
 
 int sign(float checkSignFloat) 
 {

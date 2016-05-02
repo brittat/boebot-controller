@@ -120,7 +120,7 @@ void stateMachine()
       if (t - delayStart > waitTime){
         state = 6;
       }
-      break;
+      break;      
   }
 }
 
