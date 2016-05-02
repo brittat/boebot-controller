@@ -1,8 +1,14 @@
 const int maxFeatureDepth = 30;
 const float aperture = 3.14/nDir;
 
+//The coefficients below are used for detecting the cylinders
+//Coefficients for the polynomial approximating the width2-distance relation
 const float P0 = 87.07;
 const float P1 = 0.8082;
+
+//Coefficients for the polynomial approximating the angle-distance relation
+const float p0 = 1.0507;
+const float p1 = -1.6639/10000;
 
 void detectFeatures()
 {
@@ -35,8 +41,9 @@ void detectFeatures()
       float width = 2*dist*tan(theta); //This one is approximately linear against the distance to the group
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
       float width2 = P0 + P1*dist;
+      float angle2 = p0 + p1*dist;
       
-      if(dist < 2000 && abs(width-width2) < 150)
+      if(dist < 2000 && abs(width-width2) < 150 && abs(angle-angle2) < 0.2)
       {
         Serial.print("Potential target! ");
         targetHeading = heading;
