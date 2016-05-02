@@ -3,13 +3,23 @@ const float farThresh = 0.9;
 long delayStart = 0;
 long turnTime = 1000;
 long reverseTime = 3000;
-int turnSpeed = 75;
-int moveSpeed = 100;
+int turnSpeed = 50;
+int moveSpeed = 75;
 boolean beaconSearch = true;
 
 void stateMachine()
 {
   long t = millis();
+  int ir = getIrRead(MIDDLEIR,MIDDLEIRSENS);
+  /*irSum = (ir + irSum)*ir;
+  if (irSum>3 && isReversing){
+    state = 4;
+    isReversing = true;
+    leftSpeed(0);
+    rightSpeed(0);
+    delay(100);
+    delayStart = t;
+  }*/
   switch(state)
   {
     case 0:
@@ -47,13 +57,19 @@ void stateMachine()
       break;
       
     case 4: //Safe place found, move backwards to release cylinder  
-      leftSpeed(-moveSpeed);
-      rightSpeed(-moveSpeed);    
-      if(t - delayStart > reverseTime)
-      {
+       leftSpeed(-moveSpeed);
+       rightSpeed(-moveSpeed);    
+       if(t - delayStart > reverseTime)
+       {
         state = 0;
-      }      
-      break;
+        leftSpeed(0);
+        rightSpeed(0);
+        state = random(1) + 1; //Choose left or right at random
+        turnTime = random(1500);
+        isReversing = false;
+       delayStart = t;
+       }      
+       break;
 
     case 5: //Beacon search initiated, stop for scan
       leftSpeed(0);

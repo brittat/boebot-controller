@@ -3,11 +3,11 @@
 
 //Pin definitions
 const int LEFTIR = 10;
-const int RIGHTIR = 7;
-const int MIDDLEIR = 2;//7
+const int RIGHTIR = 2;
+const int MIDDLEIR = 7;
 const int LEFTIRSENS = 11;
-const int RIGHTIRSENS = 8;
-const int MIDDLEIRSENS = 4;//8
+const int RIGHTIRSENS = 4;
+const int MIDDLEIRSENS = 8;
 
 const int PINGPIN = 3;
 
@@ -32,6 +32,8 @@ long waitTime = 0;
 int numberOfTurns = 0;
 int sumRight = 0;
 int sumLeft = 0;
+int irSum = 0;
+boolean isReversing = false;
 
 
 //Sonar state machine stuff 
@@ -123,11 +125,14 @@ void loop() {
 //  Serial.println(t-oldT);
 //
 //  Serial.print(" sonarState = ");
-  
+  int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
+  Serial.println(irtest);
+  delay(100);
 
   //leftSpeed(50);
+  //Serial.println(irSum);
   //stateMachine();
-  
+ /* 
   doSonarSweep = true;  
   sonarStateMachine();
 
@@ -141,7 +146,7 @@ void loop() {
     rightSpeed(0);
     leftSpeed(0);
     
-  }
+  }*/
   //rampGenerator();  
 }
 
