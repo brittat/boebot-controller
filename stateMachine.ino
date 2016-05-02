@@ -11,30 +11,32 @@ void stateMachine()
 {
   long t = millis();
   int ir = getIrRead(MIDDLEIR,MIDDLEIRSENS);
-  /*irSum = (ir + irSum)*ir;
-  if (irSum>3 && isReversing){
+  irSum = (ir + irSum)*ir;
+  if (irSum>3 && !isReversing){
     state = 4;
     isReversing = true;
     leftSpeed(0);
     rightSpeed(0);
     delay(100);
     delayStart = t;
-  }*/
+  }
   switch(state)
   {
     case 0:
       leftSpeed(moveSpeed);
       rightSpeed(moveSpeed);
-      if(rightSens < farThresh) //Too far right
+      rightSens = getIrRead(RIGHTIR,RIGHTIRSENS);
+      leftSens = getIrRead(LEFTIR,LEFTIRSENS);
+      if(rightSens < 1) //Too far right
       {
-        state = 1;
+        //state = 1;
         turnTime = random(300, 1500);
         delayStart = t;
       }
-      else if (leftSens < farThresh) //Too far left
+      else if (leftSens < 1) //Too far left
       {
-        state = 2;
-        turnTime = random(1500);
+        //state = 2;
+        turnTime = random(300, 1500);
         delayStart = t;
       }
       break;

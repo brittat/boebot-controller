@@ -125,13 +125,13 @@ void loop() {
 //  Serial.println(t-oldT);
 //
 //  Serial.print(" sonarState = ");
-  int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
+  int irtest = getIrRead(MIDDLEIR,MIDDLEIRSENS);
   Serial.println(irtest);
   delay(100);
 
   //leftSpeed(50);
   //Serial.println(irSum);
-  //stateMachine();
+  stateMachine();
  /* 
   doSonarSweep = true;  
   sonarStateMachine();

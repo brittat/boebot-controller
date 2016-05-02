@@ -65,7 +65,7 @@ void turnSetTime(long turnTime, int angleSign)
 
 int getIrRead(int diodID, int sensorID)
 {
-  tone(diodID, 18000, 8);                // Frequency to be tested in arena
+  tone(diodID, 18000, 8);                // Frequency to be tested in arena,18000
   delay(1);                         // Wait 1 ms
   int ir = digitalRead(sensorID);         // IR receiver -> ir variable
   return ir;
