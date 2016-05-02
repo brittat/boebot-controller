@@ -3,16 +3,18 @@ const int IR_PINS[] = {LEFTIR, MIDDLEIR, RIGHTIR};
 const int IR_SENS_PINS[] = {LEFTIRSENS, MIDDLEIRSENS, RIGHTIRSENS};
 void rampGenerator()
 {
-  if(t%2048 == 0)
+  if(t%1024 == 0)
   {
     Serial.print("D ");
     Serial.print(t/1000);
     Serial.print(" ");
-    Serial.print(IRDistLeft);
+    Serial.print(IRDists[0]);
     Serial.print(" ");
-    Serial.println(IRDistRight);
+    Serial.print(IRDists[1]);
+    Serial.print(" ");
+    Serial.println(IRDists[2]);
   }
-
+  
   tone(IR_PINS[currIRDir], currFreq);
   
   if(t-lastToneChange >= rampStepLength)
@@ -30,7 +32,7 @@ void rampGenerator()
       noTone(MIDDLEIR);
       noTone(LEFTIR);
 
-      IRDists[currIRDir] = tempIRDists[currIRDir];
+      IRDists[currIRDir] = tempIRDists[currIRDir]/divider;
       tempIRDists[currIRDir] = 0;
       
     }
@@ -38,7 +40,8 @@ void rampGenerator()
 
   if(t-lastToneChange >= IRWaitTime && !measuredFlag && digitalRead(IR_SENS_PINS[currIRDir]))
   {
-     measuredFlag == true;
+     measuredFlag = true;
      tempIRDists[currIRDir]++;
+     
   }
 }

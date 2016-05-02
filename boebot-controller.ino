@@ -64,8 +64,8 @@ int millimeters[nDir];
 unsigned long lastToneChange = 0;
 const long freqStep = 500;
 const long baseFreq = 38000;
-const long maxFreq = 44000;
-const float divider = (maxFreq - baseFreq)/freqStep;
+const long maxFreq = 58000;
+const float divider = (maxFreq - baseFreq + 1)/freqStep;
 const long rampStepLength = 4000;
 const long IRWaitTime = 1000;
 long currFreq = baseFreq;
@@ -81,7 +81,7 @@ const int NUM_IR_DIR = 3;
 enum IRDirection {LEFT, MID, RIGHT};
 IRDirection currIRDir = LEFT;
 
-int IRDists[NUM_IR_DIR];
+float IRDists[NUM_IR_DIR];
 int tempIRDists[NUM_IR_DIR];
 
 bool measuredFlag = false;
@@ -114,7 +114,7 @@ void setup() {
 
   attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
   
-  Serial.println("N IR_left IR_right");
+  Serial.println("N IR_left IR_mid IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
 }
@@ -125,6 +125,8 @@ void loop() {
   long oldT = t;
   t = micros();
 
+
+  rampGenerator(); 
 //  Serial.print("dt = ");
 //  Serial.println(t-oldT);
 //
@@ -151,7 +153,7 @@ void loop() {
     leftSpeed(0);
     
   }*/
-  //rampGenerator();  
+   
 }
 
 
