@@ -2,7 +2,7 @@
 #include <math.h>
 
 //Pin definitions
-const int LEFTIR = 10;
+const int LEFTIR = 9;
 const int RIGHTIR = 2;
 const int MIDDLEIR = 7;
 const int LEFTIRSENS = 11;
@@ -126,10 +126,10 @@ void loop() {
   long oldT = t;
   t = micros();
 
-
+  doSonarSweep = true;
+  
+  sonarStateMachine();
   rampGenerator();
-  stateMachine();
-
 }
 
 

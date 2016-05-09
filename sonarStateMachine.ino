@@ -4,6 +4,7 @@
 const int dirAngle = 180/nDir;
 void sonarStateMachine()
 { 
+  t = micros();
   if(newSonarPulse)
   {
     millimeters[currDir] = calcSonarDistance();

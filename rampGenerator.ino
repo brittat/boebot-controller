@@ -3,6 +3,7 @@ const int IR_PINS[] = {LEFTIR, MIDDLEIR, RIGHTIR};
 const int IR_SENS_PINS[] = {LEFTIRSENS, MIDDLEIRSENS, RIGHTIRSENS};
 void rampGenerator()
 {
+  t = micros();
   if(t%1024 == 0)
   {
     Serial.print("D ");
@@ -14,7 +15,7 @@ void rampGenerator()
     Serial.print(" ");
     Serial.println(IRDists[2]);
   }
-  
+  if(currIRDir == 3){Serial.println(currIRDir);}
   tone(IR_PINS[currIRDir], currFreq);
   
   if(t-lastToneChange >= rampStepLength)
