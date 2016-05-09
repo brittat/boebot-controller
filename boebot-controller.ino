@@ -19,6 +19,8 @@ const int SONARMOTOR = 10;
 float rightSens = 0;
 float leftSens = 0;
 float middleSens = 0;
+int rightSens2 = 0;
+int leftSens2 = 0;
 
 //Low pass filter stuff
 const int LPLength = 4;
@@ -28,12 +30,14 @@ int lpPointer = 0;
 
 //State machine stuff
 int state = 0;
-long waitTime = 0;
+long waitTime = 3000;
 int numberOfTurns = 0;
 int sumRight = 0;
 int sumLeft = 0;
 int irSum = 0;
 boolean isReversing = false;
+boolean beaconSearch = false;
+boolean randomWalk = false;
 
 
 //Sonar state machine stuff 
@@ -60,8 +64,8 @@ int millimeters[nDir];
 unsigned long lastToneChange = 0;
 const long freqStep = 500;
 const long baseFreq = 38000;
-const long maxFreq = 44000;
-const float divider = (maxFreq - baseFreq)/freqStep;
+const long maxFreq = 58000;
+const float divider = (maxFreq - baseFreq + 1)/freqStep;
 const long rampStepLength = 4000;
 const long IRWaitTime = 1000;
 long currFreq = baseFreq;
@@ -77,7 +81,7 @@ const int NUM_IR_DIR = 3;
 enum IRDirection {LEFT, MID, RIGHT};
 IRDirection currIRDir = LEFT;
 
-int IRDists[NUM_IR_DIR];
+float IRDists[NUM_IR_DIR];
 int tempIRDists[NUM_IR_DIR];
 
 bool measuredFlag = false;
@@ -111,7 +115,7 @@ void setup() {
 
   attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
   
-  Serial.println("N IR_left IR_right");
+  Serial.println("N IR_left IR_mid IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
 }
@@ -122,10 +126,13 @@ void loop() {
   long oldT = t;
   t = micros();
 
+
+  rampGenerator(); 
 //  Serial.print("dt = ");
 //  Serial.println(t-oldT);
 //
 //  Serial.print(" sonarState = ");
+<<<<<<< HEAD
   /*int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
   Serial.println(irtest);
   delay(100);
@@ -134,6 +141,16 @@ void loop() {
   //Serial.println(irSum);
   //stateMachine();
 */
+=======
+  //int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
+  //Serial.println(irtest);
+  //delay(100);
+
+  //leftSpeed(50);
+  //Serial.println(irSum);
+  stateMachine();
+ /* 
+>>>>>>> origin/master
   doSonarSweep = true;  
   sonarStateMachine();
 
@@ -147,6 +164,7 @@ void loop() {
     delay(targetDistance*5);
     rightSpeed(0);
     leftSpeed(0);
+<<<<<<< HEAD
     doSonarSweep = false; 
   }
 
@@ -154,6 +172,11 @@ void loop() {
 
   
   //rampGenerator();  
+=======
+    
+  }*/
+   
+>>>>>>> origin/master
 }
 
 
