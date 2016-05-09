@@ -127,56 +127,9 @@ void loop() {
   t = micros();
 
 
-  rampGenerator(); 
-//  Serial.print("dt = ");
-//  Serial.println(t-oldT);
-//
-//  Serial.print(" sonarState = ");
-<<<<<<< HEAD
-  /*int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
-  Serial.println(irtest);
-  delay(100);
-
-  //leftSpeed(50);
-  //Serial.println(irSum);
-  //stateMachine();
-*/
-=======
-  //int irtest = getIrRead(RIGHTIR,RIGHTIRSENS);
-  //Serial.println(irtest);
-  //delay(100);
-
-  //leftSpeed(50);
-  //Serial.println(irSum);
+  rampGenerator();
   stateMachine();
- /* 
->>>>>>> origin/master
-  doSonarSweep = true;  
-  sonarStateMachine();
 
-
-  if (targetHeading != 0)
-  {
-    turn(targetHeading);
-    targetHeading = 0;  
-    //rightSpeed(32);
-    //leftSpeed(35);
-    delay(targetDistance*5);
-    rightSpeed(0);
-    leftSpeed(0);
-<<<<<<< HEAD
-    doSonarSweep = false; 
-  }
-
-
-
-  
-  //rampGenerator();  
-=======
-    
-  }*/
-   
->>>>>>> origin/master
 }
 
 
