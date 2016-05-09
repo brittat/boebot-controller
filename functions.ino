@@ -97,39 +97,69 @@ int sumIR(int irID)
 
 //Send out a pulse from the sonar by sending a 5 us pulse on the data line.
 //Note that interrupts are temporarily turned off to avoid reading the init pulse.
-void sonarPulse()
+void lowSonarPulse()
 {
   noInterrupts();
-  pinMode(PINGPIN, OUTPUT);
-  digitalWrite(PINGPIN, LOW);
+  pinMode(LOWPINGPIN, OUTPUT);
+  digitalWrite(LOWPINGPIN, LOW);
   delayMicroseconds(2);
-  digitalWrite(PINGPIN, HIGH);
+  digitalWrite(LOWPINGPIN, HIGH);
   delayMicroseconds(5);
-  digitalWrite(PINGPIN, LOW);
-  pinMode(PINGPIN, INPUT);
+  digitalWrite(LOWPINGPIN, LOW);
+  pinMode(LOWPINGPIN, INPUT);
+  interrupts();
+}
+
+void highSonarPulse()
+{
+  noInterrupts();
+  pinMode(HIGHPINGPIN, OUTPUT);
+  digitalWrite(HIGHPINGPIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(HIGHPINGPIN, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(HIGHPINGPIN, LOW);
+  pinMode(HIGHPINGPIN, INPUT);
   interrupts();
 }
 
 
 //Interrupt service routine for the sonar. 
 //It is run every time an edge is detected on the sonar data line.
-void sonarISR() 
+void lowSonarISR() 
 {
-  if(digitalRead(PINGPIN) == HIGH)
+  if(digitalRead(LOWPINGPIN) == HIGH)
   {
-    pulseStart = micros();
+    lowPulseStart = micros();
   } else 
   {
-    newSonarPulse = true;
-    pulseEnd = micros();
+    newLowSonarPulse = true;
+    lowPulseEnd = micros();
+  }
+}
+
+void highSonarISR() 
+{
+  if(digitalRead(HIGHPINGPIN) == HIGH)
+  {
+    highPulseStart = micros();
+  } else 
+  {
+    newHighSonarPulse = true;
+    lowPulseEnd = micros();
   }
 }
 
 
 //Get distance from sonar timing data
-int calcSonarDistance()
+int calcLowSonarDistance()
 {
-  return (pulseEnd - pulseStart) * 0.169;
+  return (lowPulseEnd - lowPulseStart) * 0.169;
+}
+
+int calcHighSonarDistance()
+{
+  return (highPulseEnd - highPulseStart) * 0.169;
 }
 
 

@@ -3,13 +3,14 @@
 
 //Pin definitions
 const int LEFTIR = 9;
-const int RIGHTIR = 2;
+const int RIGHTIR = 1;
 const int MIDDLEIR = 7;
 const int LEFTIRSENS = 11;
 const int RIGHTIRSENS = 4;
 const int MIDDLEIRSENS = 8;
 
-const int PINGPIN = 3;
+const int LOWPINGPIN = 3;
+const int HIGHPINGPIN = 2;
 
 const int LEFTMOTOR = 13;
 const int RIGHTMOTOR = 12;
@@ -45,6 +46,7 @@ boolean randomWalk = false;
 const long initPulseTime = 5000;
 const int nDir = 32;
 const long servoWaitTime = 100000;
+const long sonarWaitTime = 10000;
 const long sonarLinger = 100000;
 
 
@@ -53,12 +55,16 @@ int currDir = 0;
 unsigned long sonarDelay = 0;
 unsigned long tSonar = 0;
 
-bool newSonarPulse = false;
-volatile unsigned long pulseStart, pulseEnd;
+bool newLowSonarPulse = false;
+bool newHighSonarPulse = false;
+volatile unsigned long highPulseStart, highPulseEnd;
+volatile unsigned long lowPulseStart, lowPulseEnd;
 bool doSonarSweep = false;
 
 
-int millimeters[nDir];
+int highMillimeters[nDir];
+int lowMillimeters[nDir];
+int diffMillimeters[nDir];
 
 // Ramp generator stuff
 unsigned long lastToneChange = 0;
@@ -113,7 +119,8 @@ void setup() {
   rightMotor.attach(RIGHTMOTOR);
   sonarMotor.attach(SONARMOTOR);
 
-  attachInterrupt(digitalPinToInterrupt(PINGPIN), sonarISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(LOWPINGPIN), lowSonarISR, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(HIGHPINGPIN), highSonarISR, CHANGE);
   
   Serial.println("N IR_left IR_mid IR_right");
   Serial.println("L 0 60");

@@ -1,4 +1,4 @@
-/*const int maxFeatureDepth = 30;
+const int maxFeatureDepth = 30;
 const float aperture = 3.14/nDir;
 
 //The coefficients below are used for detecting the cylinders
@@ -16,9 +16,21 @@ void detectFeatures()
   int cGroup = 1;
   groups[0] = cGroup;
 
+
+//Bygg diffMillimeters
+
+    for(int i = 1; i < nDir; i++)
+  {
+
+  diffMillimeters[i] = highMillimeters[i] - lowMillimeters[i];
+  
+  }
+
+
+  
   for(int i = 1; i < nDir; i++)
   {
-    if(abs(millimeters[i] - millimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
+    if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
@@ -80,7 +92,7 @@ void detectFeatures()
       Serial.println(maxSymmComp);
     }
   }
-  serialPrintArray(millimeters, nDir);
+  serialPrintArray(diffMillimeters, nDir);
 }
 
 int getGroupLength(int groups[], int group)
@@ -103,7 +115,7 @@ int getMeanGroupDist(int groups[], int group)
   {
     if(groups[i] == group)
     {
-      distSum += millimeters[i];
+      distSum += diffMillimeters[i];
     }
   }
   return distSum/getGroupLength(groups, group);
@@ -132,14 +144,14 @@ int getMaxDiff(int groups[], int group)
   {
     if(groups[i] == group)
     {
-      if (millimeters[i] > maxDist)
+      if (diffMillimeters[i] > maxDist)
       {
-        maxDist = millimeters[i];
+        maxDist = diffMillimeters[i];
       }
 
-      if (millimeters[i] < minDist)
+      if (diffMillimeters[i] < minDist)
       {
-        minDist = millimeters[i];
+        minDist = diffMillimeters[i];
       }
     }
   }
@@ -160,7 +172,7 @@ float getSymmComparison(int groups[], int group)
 
     if(groups[i] == group)
     {
-      tmpVec[j] = millimeters[i];
+      tmpVec[j] = diffMillimeters[i];
       j++;
     }
   }
@@ -178,4 +190,3 @@ return (float(lengthOfGroup)*m)/symmVal;
   
 }
 
-*/
