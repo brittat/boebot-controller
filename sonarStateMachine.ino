@@ -1,7 +1,7 @@
 
 
 
-const int dirAngle = 180/nDir;
+const float dirAngle = 160/nDir;
 void sonarStateMachine()
 { 
   t = micros();
@@ -26,7 +26,7 @@ void sonarStateMachine()
       }
       break;
     case 0: // Move servo into position
-      sonarMotor.write(currDir*dirAngle);
+      sonarMotor.write(currDir*dirAngle + 10);
       sonarDelay = t;
       if(currDir == 0)
       {

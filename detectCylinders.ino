@@ -22,7 +22,9 @@ void detectFeatures()
     for(int i = 1; i < nDir; i++)
   {
 
-  diffMillimeters[i] = highMillimeters[i] - lowMillimeters[i];
+  
+
+  diffMillimeters[i] = lowMillimeters[i] - highMillimeters[i];
   
   }
 
@@ -92,7 +94,7 @@ void detectFeatures()
       Serial.println(maxSymmComp);
     }
   }
-  serialPrintArray(diffMillimeters, nDir);
+  serialPrintArray(lowMillimeters, nDir);
 }
 
 int getGroupLength(int groups[], int group)
