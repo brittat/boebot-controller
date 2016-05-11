@@ -1,7 +1,4 @@
-
-
-
-const float dirAngle = 160/nDir;
+const float dirAngle = degreeAperture/nDir;
 void sonarStateMachine()
 { 
   t = micros();
@@ -26,11 +23,12 @@ void sonarStateMachine()
       }
       break;
     case 0: // Move servo into position
-      sonarMotor.write(currDir*dirAngle + 10);
+      //sonarMotor.write(90);
+      sonarMotor.write(currDir*dirAngle + 20);
       sonarDelay = t;
       if(currDir == 0)
       {
-        sonarDelay += 1000000; //Wait an extra second if turning back
+        sonarDelay = t + 1000000; //Wait an extra second if turning back
       }
       sonarState = 11;
       break;
@@ -39,8 +37,7 @@ void sonarStateMachine()
       if(t - sonarDelay > servoWaitTime)
       {
         sonarState = 12;
-      }
-      
+      }      
       break;
 
     case 12: // Send init pulse
@@ -77,7 +74,7 @@ void sonarStateMachine()
       
       if(currDir == 0)
       {
-        detectFeatures();
+        detectCylinders();
         sonarState = -1;
       }      
       

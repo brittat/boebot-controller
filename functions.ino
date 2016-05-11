@@ -63,6 +63,15 @@ void turnSetTime(long turnTime, int angleSign)
   
 }
 
+void driveDistance(int distance)
+{
+  leftSpeed(50);
+  rightSpeed(50);
+  drivingStart = t;
+  drivingTime = (long)distance * 1000 * 10.9;
+  Serial.println(drivingTime);
+}
+
 int getIrRead(int diodID, int sensorID)
 {
   tone(diodID, 38000, 8);                
@@ -148,7 +157,7 @@ void highSonarISR()
   } else 
   {
     newHighSonarPulse = true;
-    lowPulseEnd = micros();
+    highPulseEnd = micros();
   }
 }
 
@@ -168,6 +177,16 @@ int calcHighSonarDistance()
 //Various array functions. 
 //C does not like to pass arrays, so the length has to be passed as well.
 void serialPrintArray(int array[], int l)
+{
+  for(int i = 0; i < l; i++)
+  {
+    Serial.print(array[i]);
+    Serial.print(' ');
+  }
+  Serial.println();  
+}
+
+void serialPrintFloatArray(float array[], int l)
 {
   for(int i = 0; i < l; i++)
   {

@@ -1,5 +1,5 @@
 const int maxFeatureDepth = 30;
-const float aperture = 3.14/nDir;
+
 
 //The coefficients below are used for detecting the cylinders
 //Coefficients for the polynomial approximating the width2-distance relation
@@ -10,26 +10,17 @@ const float P1 = 0.8082;
 const float p0 = 1.0507;
 const float p1 = -1.6639/10000;
 
-void detectFeatures()
+void detectCylinders()
 {
   int groups[nDir]; //Array to contain group assignments
   int cGroup = 1;
   groups[0] = cGroup;
 
-
-//Bygg diffMillimeters
-
-    for(int i = 1; i < nDir; i++)
+  for(int i = 1; i < nDir; i++)
   {
-
-  
-
-  diffMillimeters[i] = lowMillimeters[i] - highMillimeters[i];
-  
+    diffMillimeters[i] = highMillimeters[i] - lowMillimeters[i];  
   }
 
-
-  
   for(int i = 1; i < nDir; i++)
   {
     if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
@@ -45,9 +36,12 @@ void detectFeatures()
   Serial.println("Features found:");
   float maxSymmComp = 0;
   int targetGroup = 0;
+
   for(int iGroup = 1; iGroup <= cGroup; iGroup++)
   {
     int groupLength = getGroupLength(groups, iGroup);
+    //Serial.print("group length: ");
+    //Serial.println(groupLength);
     if(groupLength > 1)
     {
       float angle = aperture * groupLength; //Angle taken up by the feature
@@ -64,7 +58,7 @@ void detectFeatures()
       if(dist < 2000 && abs(width-width2) < 150 && groupSymmComparison > 100)
       {
         Serial.print("Potential target! ");
-
+        cylinderFound = true;
         if (groupSymmComparison > maxSymmComp)
         {
           Serial.print("New potential target! ");
@@ -94,7 +88,7 @@ void detectFeatures()
       Serial.println(maxSymmComp);
     }
   }
-  serialPrintArray(lowMillimeters, nDir);
+  serialPrintArray(diffMillimeters, nDir);
 }
 
 int getGroupLength(int groups[], int group)
@@ -171,7 +165,6 @@ float getSymmComparison(int groups[], int group)
   int j = 0;
   for(int i = 0; i < nDir; i++)
   {
-
     if(groups[i] == group)
     {
       tmpVec[j] = diffMillimeters[i];
