@@ -42,13 +42,17 @@ boolean randomWalk = false;
 
 
 //Sonar state machine stuff 
-
-
 const long initPulseTime = 5000;
 const int nDir = 32;
+const float degreeAperture = 150.0;
+const float aperture = (degreeAperture/180)*M_PI/nDir;
 const long servoWaitTime = 100000;
 const long sonarWaitTime = 10000;
 const long sonarLinger = 100000;
+
+//Cylinder retrieval stuff
+bool cylinderApproached = false;
+bool cylinderFound = false;
 
 
 int sonarState = 0;
