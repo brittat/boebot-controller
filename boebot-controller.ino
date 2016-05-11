@@ -36,9 +36,10 @@ int numberOfTurns = 0;
 int sumRight = 0;
 int sumLeft = 0;
 int irSum = 0;
-boolean isReversing = false;
-boolean beaconSearch = false;
-boolean walkingRandomly = true;
+bool isReversing = false;
+bool beaconSearch = false;
+bool walkingRandomly = true;
+bool cylinderFound = false;
 const float closeThresh = 0.5;
 const float farThresh = 0.9;
 long delayStart = 0;
@@ -49,13 +50,19 @@ long randomWalkStart = 0;
 int turnSpeed = 30;
 int moveSpeed = 50;
 
-
+//Cylinder retrieval stuff
+bool cylinderGrabbed = false;
+float targetHeading = 0;
+int targetDistance = 0;
+long drivingStart = 0;
+long drivingTime = 0;
 
 
 //Sonar state machine stuff 
-
 const long initPulseTime = 5000;
 const int nDir = 32;
+const float degreeAperture = 150.0;
+const float aperture = (degreeAperture/180)*M_PI/nDir;
 const long servoWaitTime = 100000;
 const long sonarWaitTime = 10000;
 const long sonarLinger = 100000;
@@ -108,9 +115,6 @@ long t = micros();
 const float turnRate = 40;
 const int robotRadius = 51;
 const int wheelRadius = 33;
-
-float targetHeading = 0;
-int targetDistance = 0;
 
 Servo leftMotor;
 Servo rightMotor;
