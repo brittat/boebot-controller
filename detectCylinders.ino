@@ -1,5 +1,5 @@
 const int maxFeatureDepth = 30;
-const float aperture = 3.14/nDir;
+const float aperture = (160.0/180)*M_PI/nDir;
 
 //The coefficients below are used for detecting the cylinders
 //Coefficients for the polynomial approximating the width2-distance relation
