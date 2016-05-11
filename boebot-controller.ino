@@ -101,6 +101,9 @@ const int wheelRadius = 33;
 float targetHeading = 0;
 int targetDistance = 0;
 
+long drivingTime = 0;
+long drivingStart = 0;
+
 Servo leftMotor;
 Servo rightMotor;
 Servo sonarMotor;
@@ -125,18 +128,19 @@ void setup() {
   Serial.println("N IR_left IR_mid IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
+
 }
 
 void loop() {
-
-
   long oldT = t;
   t = micros();
 
-  doSonarSweep = true;
+
   
-  sonarStateMachine();
+  //doSonarSweep = true;
+  //sonarStateMachine();
   rampGenerator();
+  drivingTimer();
 }
 
 

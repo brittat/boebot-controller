@@ -63,6 +63,15 @@ void turnSetTime(long turnTime, int angleSign)
   
 }
 
+void driveDistance(int distance)
+{
+  leftSpeed(50);
+  rightSpeed(50);
+  drivingStart = t;
+  drivingTime = (long)distance * 1000 * 10.9;
+  Serial.println(drivingTime);
+}
+
 int getIrRead(int diodID, int sensorID)
 {
   tone(diodID, 38000, 8);                
