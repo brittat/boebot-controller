@@ -30,7 +30,7 @@ float rightIRLP[LPLength];
 int lpPointer = 0;
 
 //State machine stuff
-int state = 0;
+int state = 8;
 long waitTime = 3000;
 int numberOfTurns = 0;
 int sumRight = 0;
@@ -70,7 +70,7 @@ const long servoWaitTime = 100000;
 const long sonarWaitTime = 10000;
 const long sonarLinger = 100000;
 
-int sonarState = 0;
+int sonarState = -1;
 int currDir = 0;
 unsigned long sonarDelay = 0;
 unsigned long tSonar = 0;
@@ -149,12 +149,11 @@ void loop() {
 
   long oldT = t;
   t = micros();
-
-  doSonarSweep = true;
   
   sonarStateMachine();
-  rampGenerator();
-  //stateMachine2();
+  //rampGenerator();
+  stateMachine();
+  drivingTimer();
   //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
   //Serial.println(ir);
   //delay(10);

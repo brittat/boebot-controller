@@ -21,11 +21,11 @@ void stateMachine()
     delay(100);
     delayStart = t;
     }*/
-  if (walkingRandomly && t - delayStart > reverseTime * 2) // Random walk when looking for beacon
+  /*if (walkingRandomly && t - delayStart > reverseTime * 2) // Random walk when looking for beacon
   {
     state = 5;
     walkingRandomly = false;
-  }
+  }*/
   switch (state)
   {
     case 0:
@@ -50,6 +50,7 @@ void stateMachine()
       }
       break;
     case 1: //turn left
+      delay(1000000);
       leftSpeed(-turnSpeed);
       rightSpeed(turnSpeed);
       if (t - delayStart > turnTime)
@@ -152,6 +153,7 @@ void stateMachine()
         }
 
       }
+      break;
 
     case 10: //Approach the cylinder
       if (targetDistance > dangerZone){
@@ -165,15 +167,17 @@ void stateMachine()
         driveDistance(targetDistance - 10); 
         
       }
+      break;
 
     case 11: //Wait during cylinder approach
 
       if (drivingFinished) {
         state = 8;
       }
+      break;
 
     //case 12: //Verify that the cylinder is grabbed
-
+      
     
     
       

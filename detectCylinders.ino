@@ -110,7 +110,7 @@ int getMeanGroupDist(int groups[], int group)
   {
     if(groups[i] == group)
     {
-      distSum += diffMillimeters[i];
+      distSum += lowMillimeters[i];
     }
   }
   return distSum/getGroupLength(groups, group);
