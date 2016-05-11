@@ -53,10 +53,12 @@ int moveSpeed = 50;
 
 //Cylinder retrieval stuff
 bool cylinderGrabbed = false;
+bool drivingFinished = false;
 float targetHeading = 0;
 int targetDistance = 0;
 long drivingStart = 0;
 long drivingTime = 0;
+int dangerZone = 100;
 
 
 //Sonar state machine stuff 
@@ -67,7 +69,6 @@ const float aperture = (degreeAperture/180)*M_PI/nDir;
 const long servoWaitTime = 100000;
 const long sonarWaitTime = 10000;
 const long sonarLinger = 100000;
-
 
 int sonarState = 0;
 int currDir = 0;

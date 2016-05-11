@@ -5,6 +5,8 @@ void drivingTimer()
     leftSpeed(0);
     rightSpeed(0);
     drivingStart = -1;
+    drivingFinished = true;
   }  
+
 }
 

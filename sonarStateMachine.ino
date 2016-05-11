@@ -75,6 +75,7 @@ void sonarStateMachine()
       if(currDir == 0)
       {
         detectCylinders();
+        doSonarSweep = false;
         sonarState = -1;
       }      
       
