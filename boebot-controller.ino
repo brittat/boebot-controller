@@ -47,6 +47,7 @@ long turnTime = 1000;
 long reverseStart = 0;
 long reverseTime = 3000;
 long randomWalkStart = 0;
+long randomWalkTime = 0;
 int turnSpeed = 30;
 int moveSpeed = 50;
 
