@@ -1,10 +1,10 @@
-const float closeThresh = 0.5;
+/*const float closeThresh = 0.5;
 const float farThresh = 0.9;
 long delayStart = 0;
 long turnTime = 1000;
 long reverseTime = 3000;
 int turnSpeed = 30;
-int moveSpeed = 50;
+int moveSpeed = 50;*/
 
 
 void stateMachine()
@@ -21,10 +21,10 @@ void stateMachine()
     delay(100);
     delayStart = t;
   }*/
-  if (randomWalk && t - delayStart > reverseTime*2) // Random walk when looking for beacon
+  if (walkingRandomly && t - delayStart > reverseTime*2) // Random walk when looking for beacon
     {
       state = 5;
-      randomWalk = false;
+      walkingRandomly = false;
     }
   switch(state)
   {
@@ -110,7 +110,7 @@ void stateMachine()
           waitTime = turnTime;
           state = 7;
         }else{ //If it has checked 360 degrees it goes into random walk
-          randomWalk = true;
+          walkingRandomly = true;
           state = 0;
           delayStart = t;
           numberOfTurns = 0;  

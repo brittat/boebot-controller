@@ -69,6 +69,7 @@ int getIrRead(int diodID, int sensorID)
   delay(1);                         // Wait 1 ms
   int ir = digitalRead(sensorID); 
   noTone(diodID);
+  delay(10);
   return ir;
 }
 
@@ -78,6 +79,7 @@ int getIrReadFloor(int diodID, int sensorID)
   delay(1);                         // Wait 1 ms
   int ir = digitalRead(sensorID);         // IR receiver -> ir variable
   noTone(diodID);
+  delay(10); //To avoid overload
   return ir;
 }
 

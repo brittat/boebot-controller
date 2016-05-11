@@ -3,10 +3,10 @@
 
 //Pin definitions
 const int LEFTIR = 9;
-const int RIGHTIR = 1;
+const int RIGHTIR = 4;
 const int MIDDLEIR = 7;
 const int LEFTIRSENS = 11;
-const int RIGHTIRSENS = 4;
+const int RIGHTIRSENS = 5;
 const int MIDDLEIRSENS = 8;
 
 const int LOWPINGPIN = 3;
@@ -38,7 +38,18 @@ int sumLeft = 0;
 int irSum = 0;
 boolean isReversing = false;
 boolean beaconSearch = false;
-boolean randomWalk = false;
+boolean walkingRandomly = true;
+const float closeThresh = 0.5;
+const float farThresh = 0.9;
+long delayStart = 0;
+long turnTime = 1000;
+long reverseStart = 0;
+long reverseTime = 3000;
+long randomWalkStart = 0;
+int turnSpeed = 30;
+int moveSpeed = 50;
+
+
 
 
 //Sonar state machine stuff 
@@ -137,6 +148,10 @@ void loop() {
   
   sonarStateMachine();
   rampGenerator();
+  //stateMachine2();
+  //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
+  //Serial.println(ir);
+  //delay(10);
 }
 
 
