@@ -43,6 +43,7 @@ boolean randomWalk = false;
 
 //Sonar state machine stuff 
 
+
 const long initPulseTime = 5000;
 const int nDir = 32;
 const long servoWaitTime = 100000;
