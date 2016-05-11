@@ -52,8 +52,8 @@ const long sonarLinger = 100000;
 
 int sonarState = 0;
 int currDir = 0;
-unsigned long sonarDelay = 0;
-unsigned long tSonar = 0;
+long sonarDelay = 0;
+long tSonar = 0;
 
 bool newLowSonarPulse = false;
 bool newHighSonarPulse = false;
