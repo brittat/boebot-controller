@@ -39,6 +39,7 @@ int irSum = 0;
 boolean isReversing = false;
 boolean beaconSearch = false;
 boolean randomWalk = false;
+boolean cylinderFound = false;
 
 
 //Sonar state machine stuff 
@@ -52,8 +53,9 @@ const long sonarLinger = 100000;
 
 //Cylinder retrieval stuff
 bool cylinderApproached = false;
-bool cylinderFound = false;
-
+bool cylinderGrabbed = false;
+float targetHeading = 0;
+int targetDistance = 0;
 
 int sonarState = 0;
 int currDir = 0;
@@ -103,8 +105,7 @@ const float turnRate = 40;
 const int robotRadius = 51;
 const int wheelRadius = 33;
 
-float targetHeading = 0;
-int targetDistance = 0;
+
 
 long drivingTime = 0;
 long drivingStart = 0;

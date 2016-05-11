@@ -58,6 +58,7 @@ void detectCylinders()
       if(dist < 2000 && abs(width-width2) < 150 && groupSymmComparison > 100)
       {
         Serial.print("Potential target! ");
+        cylinderFound = true;
         if (groupSymmComparison > maxSymmComp)
         {
           Serial.print("New potential target! ");

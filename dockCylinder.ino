@@ -1,31 +1,31 @@
-void dockCylinder()
 
+int dangerZone = 100;
+
+void dockCylinder()
 {
 
-  /*if (!cylinderApproached)
-
+  if (!cylinderGrabbed)
   {
 
-    If a cylinder is found
+    if (targetDistance < 20) {
+      turn(targetHeading);
+      //cylinderGrabbed = true;
+      leftSpeed(0);
+      rightSpeed(0);
 
-    Approach until in front of cylinder at a given distance (20cm ish)
+    } else {
 
-    cylinderApproached = true;
+      if (targetDistance < 110) {
+
+        dangerZone = 10;
+
+      }
+
+      turn(targetHeading);
+      driveDistance(targetDistance - dangerZone);
+
+    }
 
   }
-
-
-
-  if (!cylinderFound && cylinderApproached)
-
-  {
-
-    Approach further
-
-    Confirm existance of cylinder ()
-
-    cylinderFound = true;
-
-  }*/
 
 }
