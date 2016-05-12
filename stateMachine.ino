@@ -176,7 +176,12 @@ void stateMachine()
       }
       break;
 
-    //case 12: //Verify that the cylinder is grabbed
+    case 12: //Verify that the cylinder is grabbed
+      state = 13;
+      break;
+
+    case 13:
+      break;
       
     
     

@@ -91,7 +91,7 @@ unsigned long lastToneChange = 0;
 const long freqStep = 500;
 const long baseFreq = 38000;
 const long maxFreq = 58000;
-const float divider = (maxFreq - baseFreq + 1)/freqStep;
+const float divider = (maxFreq - baseFreq)/freqStep + 1;
 const long rampStepLength = 4000;
 const long IRWaitTime = 1000;
 long currFreq = baseFreq;
@@ -111,6 +111,7 @@ float IRDists[NUM_IR_DIR];
 int tempIRDists[NUM_IR_DIR];
 
 bool measuredFlag = false;
+bool beaconCheck = false;
 
 long t = micros();
 
@@ -150,9 +151,9 @@ void loop() {
   long oldT = t;
   t = micros();
   
-  sonarStateMachine();
-  //rampGenerator();
-  stateMachine();
+  //sonarStateMachine();
+  rampGenerator();
+  //stateMachine();
   drivingTimer();
   //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
   //Serial.println(ir);
