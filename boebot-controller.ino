@@ -151,10 +151,11 @@ void loop() {
   long oldT = t;
   t = micros();
   
-  //sonarStateMachine();
+  sonarStateMachine();
   rampGenerator();
-  //stateMachine();
+  stateMachine();
   drivingTimer();
+  Serial.println(state);
   //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
   //Serial.println(ir);
   //delay(10);

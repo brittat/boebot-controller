@@ -149,6 +149,7 @@ void stateMachine()
           cylinderFound = false;
           state = 10;
         } else {
+          state = 8; //debug stuff
           //set state to random walk
         }
 
@@ -165,7 +166,7 @@ void stateMachine()
 
         turn(targetHeading);
         driveDistance(targetDistance - 10); 
-        
+        state = 11;
       }
       break;
 
