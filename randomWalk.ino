@@ -1,3 +1,4 @@
+
 void randomWalk()
 {
 long t = micros();
@@ -12,13 +13,13 @@ switch(state)
       if(rightSens < 1) //Too far right
       {
         state = 1;
-        turnTime = random(300, 1500);
+        turnTime = random(300000, 1500000);
         delayStart = t;
       }
       else if (leftSens < 1) //Too far left
       {
         state = 2;
-        turnTime = random(300, 1500);
+        turnTime = random(300000, 1500000);
         delayStart = t;
       }
       break;

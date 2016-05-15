@@ -9,7 +9,7 @@
 
 void stateMachine()
 {
-  long t = millis();
+  long t = micros();
   //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
   //irSum = (ir + irSum)*ir;
   /*if (irSum>3 && !isReversing){
@@ -143,7 +143,10 @@ void stateMachine()
       state = 9;
       break;
 
-    case 9: //Waiting for the scan to complete
+    case 9: //Waiting for the scan to complete //findBeacon();
+  //int ir = beaconRead();
+  //int ir = sumIR(RIGHTIRSENS);
+  //Serial.println(numberOfTurns);
       if (doSonarSweep == false) {
         if (cylinderFound) {
           cylinderFound = false;
@@ -161,7 +164,13 @@ void stateMachine()
 
         turn(targetHeading);
         driveDistance(targetDistance - dangerZone-10); 
-        state = 11;
+        state = 11; //findBeacon(); //findBeacon();
+  //int ir = beaconRead();
+  //int ir = sumIR(RIGHTIRSENS);
+  //Serial.println(numberOfTurns);
+  //int ir = beaconRead();
+  //int ir = sumIR(RIGHTIRSENS);
+  //Serial.println(numberOfTurns);
       } else {
 
         turn(targetHeading);

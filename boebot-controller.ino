@@ -30,26 +30,29 @@ float rightIRLP[LPLength];
 int lpPointer = 0;
 
 //State machine stuff
-int state = 8;
-long waitTime = 3000;
+int state = 0;
+int summedBeaconRead = 0;
 int numberOfTurns = 0;
 int sumRight = 0;
 int sumLeft = 0;
 int irSum = 0;
 bool isReversing = false;
 bool beaconSearch = false;
-bool walkingRandomly = true;
+bool walkingRandomly = false;
 bool cylinderFound = false;
+bool approachingCylinder = true;
+bool timeToScan = false;
 const float closeThresh = 0.5;
 const float farThresh = 0.9;
 long delayStart = 0;
-long turnTime = 1000;
+long turnTime = 1000000;
 long reverseStart = 0;
-long reverseTime = 3000;
+long reverseTime = 3000000;
+long waitTime = 750000;
 long randomWalkStart = 0;
 long randomWalkTime = 0;
 int turnSpeed = 30;
-int moveSpeed = 50;
+int moveSpeed = 20;
 
 //Cylinder retrieval stuff
 bool cylinderGrabbed = false;
@@ -156,9 +159,14 @@ void loop() {
   stateMachine();
   drivingTimer();
   Serial.println(state);
-  //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
-  //Serial.println(ir);
-  //delay(10);
+  //stateMachine2();
+  //randomWalk();
+ 
+  //findBeacon();
+  //int ir = beaconRead();
+  //int ir = sumIR(RIGHTIRSENS);
+  //Serial.println(numberOfTurns);
+  
 }
 
 

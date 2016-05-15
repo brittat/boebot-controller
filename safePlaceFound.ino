@@ -1,6 +1,6 @@
 void safePlaceFound()
 {
-long t = millis();
+long t = micros();
 switch(state)
 {
   case 0: //Stop

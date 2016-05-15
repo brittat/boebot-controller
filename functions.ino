@@ -105,7 +105,32 @@ int sumIR(int irID)
   }
   return reading;
 }
-
+//Check the left and right sensors for beacon signal. 
+//Returns 0 for no read, 1 left read, 2 right read and 3 for both
+int beaconRead()
+{
+  int sumLeft = 0;
+  int sumRight = 0;
+  int nPoints = 100;
+  int scanTime = 1000; //ms
+  for (int i = 0; i < nPoints; i++)
+  {
+    int irLeft = digitalRead(LEFTIRSENS);
+    int irRight = digitalRead(RIGHTIRSENS);
+    sumLeft = sumLeft + irLeft;
+    sumRight = sumRight+ irRight;
+    delay(scanTime/nPoints);    
+  }
+  if (sumLeft == nPoints && sumRight == nPoints){
+    return 0;
+  }else if (sumLeft < nPoints && sumRight == nPoints){
+    return 1;
+  }else if (sumLeft == nPoints && sumRight < nPoints){
+    return 2;
+  }else{
+    return 3;
+  }
+}
 //Send out a pulse from the sonar by sending a 5 us pulse on the data line.
 //Note that interrupts are temporarily turned off to avoid reading the init pulse.
 void lowSonarPulse()

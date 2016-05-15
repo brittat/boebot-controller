@@ -2,7 +2,7 @@
 
 void stateMachine2()
 {  
-  long t = millis();
+  long t = micros();
   int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
   irSum = (ir + irSum)*ir;
   if (irSum>3 && !isReversing){    
@@ -24,14 +24,23 @@ void stateMachine2()
   {   
     walkingRandomly = false;
     state = 0;
+  } else if (timeToScan)
+  { 
+    sonarState = 0;
+    sonarStateMachine();
+    if (cylinderFound)
+    {
+      approachingCylinder = true;
+    }
   }
 
   if (walkingRandomly){
     randomWalk();
+  }else if (approachingCylinder){
+    cylinderApproach();
   }else if (beaconSearch){
     findBeacon();
-  }else if (isReversing)
-  {
+  }else if (isReversing)  {
     safePlaceFound();
   }
 }
