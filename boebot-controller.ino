@@ -75,8 +75,8 @@ const long sonarLinger = 100000;
 
 int sonarState = -1;
 int currDir = 0;
-unsigned long sonarDelay = 0;
-unsigned long tSonar = 0;
+long sonarDelay = 0;
+long tSonar = 0;
 
 bool newLowSonarPulse = false;
 bool newHighSonarPulse = false;
@@ -153,12 +153,12 @@ void loop() {
 
   long oldT = t;
   t = micros();
-  
+  //doSonarSweep = true;
   sonarStateMachine();
   rampGenerator();
-  stateMachine();
-  drivingTimer();
-  Serial.println(state);
+  //stateMachine();
+  //drivingTimer();
+  //Serial.println(state);
   //stateMachine2();
   //randomWalk();
  

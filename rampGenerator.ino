@@ -1,5 +1,8 @@
 // Needs some work still, we can use getDistanceIR for now
 const int IR_PINS[] = {LEFTIR, MIDDLEIR, RIGHTIR};
+//LEFTIR = 9;
+//RIGHTIR = 4;
+//MIDDLEIR = 7;
 const int IR_SENS_PINS[] = {LEFTIRSENS, MIDDLEIRSENS, RIGHTIRSENS};
 void rampGenerator()
 {
