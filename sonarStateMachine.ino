@@ -2,13 +2,21 @@ const float dirAngle = degreeAperture/nDir;
 void sonarStateMachine()
 { 
   t = micros();
-  if(newLowSonarPulse)
+  if(newLowSonarPulse && verifyCylinder)
+  {
+    verifyLow = calcLowSonarDistance();
+    newLowSonarPulse = false;
+  } else if (newLowSonarPulse)
   {
     lowMillimeters[currDir] = calcLowSonarDistance();
     newLowSonarPulse = false;
     //serialPrintArray(millimeters, nDir);
   }
-  if(newHighSonarPulse)
+  if(newHighSonarPulse && verifyCylinder)
+  {
+    verifyHigh = calcHighSonarDistance();
+    newHighSonarPulse = false;
+  } else if (newHighSonarPulse)
   {
     highMillimeters[currDir] = calcHighSonarDistance();
     newHighSonarPulse = false;
@@ -20,6 +28,10 @@ void sonarStateMachine()
       if(doSonarSweep)
       {
         sonarState = 0;
+      }
+      else if (verifyCylinder)
+      {
+        sonarState = 100;
       }
       break;
     case 0: // Move servo into position
@@ -76,6 +88,54 @@ void sonarStateMachine()
       {
         detectCylinders();
         doSonarSweep = false;
+        sonarState = -1;
+      }      
+      
+      break;
+
+      case 100:
+      sonarMotor.write(90);
+      sonarDelay = t;
+     
+      sonarState = 101;
+      break;
+      
+    case 101: //Wait for servo
+      if(t - sonarDelay > servoWaitTime)
+      {
+        sonarState = 102;
+      }      
+      break;
+
+    case 102: // Send init pulse
+      lowSonarPulse();
+      sonarDelay = t;
+      sonarState = 103;
+      break;
+
+     case 104: //Wait for servo
+      if(t - sonarDelay > sonarWaitTime)
+      {
+        sonarState = 105;
+      }
+      
+      break;
+
+    case 105: // Send init pulse
+      highSonarPulse();
+      sonarDelay = t;
+      sonarState = 3;
+      break;
+
+    case 105:
+      if(t-sonarDelay > sonarLinger)
+      {
+        sonarState = 106;
+      }
+      break;
+
+    case 106: // Done      
+        verifyCylinder = false;
         sonarState = -1;
       }      
       

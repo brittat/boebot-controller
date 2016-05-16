@@ -87,6 +87,10 @@ bool newHighSonarPulse = false;
 volatile unsigned long highPulseStart, highPulseEnd;
 volatile unsigned long lowPulseStart, lowPulseEnd;
 bool doSonarSweep = false;
+bool verifyCylinder = false;
+
+int verifyLow = 0;
+int verifyHigh = 0;
 
 
 int highMillimeters[nDir];
