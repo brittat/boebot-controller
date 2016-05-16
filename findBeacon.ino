@@ -19,6 +19,7 @@ switch(state)
         leftSpeed(moveSpeed);
         rightSpeed(moveSpeed);
         delayStart = t;
+        waitTime = 4*waitTimeLong;
         numberOfTurns = 0;
         state = 2;
       }else if(summedBeaconRead == 0){ //No detection
@@ -26,6 +27,7 @@ switch(state)
         rightSpeed(turnSpeed);
         numberOfTurns++;
         if (numberOfTurns < 8){ 
+          waitTime = waitTimeLong;
           delayStart = t;
           state = 2;
         }else{ //If it has checked 360 degrees it goes into random walk
@@ -40,12 +42,14 @@ switch(state)
         delayStart = t;
         state = 2;
         numberOfTurns = 0;
+        waitTime = waitTimeShort;
       }else{ //If no detection on the left, rotate to the right
         leftSpeed(turnSpeed);
         rightSpeed(-turnSpeed);
         delayStart = t;
         state = 2;
         numberOfTurns = 0;
+        waitTime = waitTimeShort;
       }
       break;
       

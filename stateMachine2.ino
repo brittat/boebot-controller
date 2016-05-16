@@ -11,20 +11,27 @@ void stateMachine2()
   }*/
   if (cylinderFound)
   {
+   state = 0;
    behaviourState = approachCylinder; 
+   cylinderFound = false;
   }
   switch(behaviourState)
   {
     case rWalk:
       randomWalk();
+      break;
     case approachCylinder:
       cylinderApproach();
+      break;
     case beaconFind:
       findBeacon();
+      break;
     case reverse:
       safePlaceFound();
+      break;
     case beaconExplore:
       randomWalk;
+      break;
   }
     
 }

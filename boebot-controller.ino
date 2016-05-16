@@ -48,8 +48,10 @@ long delayStart = 0;
 long turnTime = 1000000;
 long reverseStart = 0;
 long reverseTime = 3000000;
-long waitTime = 750000;
-long scanInterval = 4000000;
+long waitTimeLong = 750000;
+long waitTimeShort = 150000;
+long waitTime = 0;
+long scanInterval = 5000000;
 long timeSinceLastScan = 0;
 long randomWalkStart = 0;
 long randomWalkTime = 0;
@@ -124,6 +126,7 @@ bool beaconCheck = false;
 
 long t = micros();
 
+
 const float turnRate = 40;
 const int robotRadius = 51;
 const int wheelRadius = 33;
@@ -162,12 +165,13 @@ void loop() {
   
   sonarStateMachine();
   rampGenerator();
-  //stateMachine2();
-  randomWalk();
+  //stateMachine2();  
   drivingTimer();
-  Serial.println(behaviourState);
+  //Serial.println(behaviourState);
   //stateMachine2();
   //randomWalk();
+  //findBeacon();
+
  
   //findBeacon();
   //int ir = beaconRead();

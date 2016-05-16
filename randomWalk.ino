@@ -7,6 +7,7 @@ switch(state)
     case 0: 
     if (t - randomWalkStart > randomWalkTime && behaviourState == beaconExplore)
     {   
+      Serial.println("Hej");
       behaviourState = beaconFind;
     } else if (doSonarSweep)
     {

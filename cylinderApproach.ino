@@ -3,6 +3,7 @@ void cylinderApproach()
   switch(state)
   {
       case 0: //Approach the cylinder
+        
         if (targetDistance > dangerZone){
   
           turn(targetHeading);
@@ -16,12 +17,11 @@ void cylinderApproach()
         }
         break;
   
-      case 2: //Wait during cylinder approach
-  
+      case 1: //Wait during cylinder approach  
         if (drivingFinished) {
-          state = 3;
-          behaviourState = beaconFind;
-          cylinderFound = false;
+          
+          state = 0;
+          //behaviourState = beaconFind;
         }
         break;
   
