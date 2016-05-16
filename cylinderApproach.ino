@@ -20,6 +20,8 @@ void cylinderApproach()
   
         if (drivingFinished) {
           state = 3;
+          behaviourState = beaconFind;
+          cylinderFound = false;
         }
         break;
   

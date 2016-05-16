@@ -49,10 +49,12 @@ long turnTime = 1000000;
 long reverseStart = 0;
 long reverseTime = 3000000;
 long waitTime = 750000;
+long scanInterval = 4000000;
+long timeSinceLastScan = 0;
 long randomWalkStart = 0;
 long randomWalkTime = 0;
 int turnSpeed = 30;
-int moveSpeed = 20;
+int moveSpeed = 50;
 
 //Cylinder retrieval stuff
 bool cylinderGrabbed = false;
@@ -109,6 +111,8 @@ const int NUM_IR_DIR = 3;
 
 enum IRDirection {LEFT, MID, RIGHT};
 IRDirection currIRDir = LEFT;
+enum stateEnum {rWalk, reverse, sonarSweep, beaconFind, approachCylinder, beaconExplore};
+stateEnum behaviourState = rWalk;
 
 float IRDists[NUM_IR_DIR];
 int tempIRDists[NUM_IR_DIR];
@@ -156,9 +160,10 @@ void loop() {
   
   sonarStateMachine();
   rampGenerator();
-  stateMachine();
+  //stateMachine2();
+  randomWalk();
   drivingTimer();
-  Serial.println(state);
+  //Serial.println(state);
   //stateMachine2();
   //randomWalk();
  

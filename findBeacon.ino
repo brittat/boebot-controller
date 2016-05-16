@@ -29,7 +29,7 @@ switch(state)
           delayStart = t;
           state = 2;
         }else{ //If it has checked 360 degrees it goes into random walk
-          walkingRandomly = true;
+          behaviourState = beaconExplore;
           state = 0;
           randomWalkStart = t;
           numberOfTurns = 0;  
@@ -50,7 +50,6 @@ switch(state)
       break;
       
     case 2: //Wait, keep on doing what you're doing
-      Serial.println(t-delayStart);
       if (t - delayStart > waitTime){
         state = 0;
       }
