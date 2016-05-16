@@ -92,12 +92,9 @@ bool verifyCylinder = false;
 int verifyLow = 0;
 int verifyHigh = 0;
 
-
 int highMillimeters[nDir];
 int lowMillimeters[nDir];
 int diffMillimeters[nDir];
-
-
 
 // Ramp generator stuff
 unsigned long lastToneChange = 0;
@@ -129,7 +126,6 @@ bool measuredFlag = false;
 bool beaconCheck = false;
 
 long t = micros();
-
 
 const float turnRate = 40;
 const int robotRadius = 51;
@@ -168,10 +164,13 @@ void loop() {
   t = micros();
   
   sonarStateMachine();
-  rampGenerator();
-  //stateMachine2();  
+  //rampGenerator();
+  stateMachine2();  
   drivingTimer();
-  //Serial.println(behaviourState);
+  Serial.println(targetHeading);
+  //Serial.println(targetDistance);
+  Serial.println(state);
+  Serial.println(behaviourState);
   //stateMachine2();
   //randomWalk();
   //findBeacon();

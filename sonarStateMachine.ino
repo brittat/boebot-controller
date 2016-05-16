@@ -36,7 +36,7 @@ void sonarStateMachine()
       break;
     case 0: // Move servo into position
       //sonarMotor.write(90);
-      sonarMotor.write(currDir*dirAngle + 30);
+      sonarMotor.write(currDir*dirAngle + 15);
       sonarDelay = t;
       if(currDir == 0)
       {

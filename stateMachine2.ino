@@ -1,5 +1,4 @@
 
-
 void stateMachine2()
 {  
   long t = micros();
@@ -30,7 +29,7 @@ void stateMachine2()
       safePlaceFound();
       break;
     case beaconExplore:
-      randomWalk;
+      randomWalk();
       break;
   }
     

@@ -36,6 +36,7 @@ void rightSpeed(int spd)
 
 void turn(float deltaAngle)
 {
+  Serial.println("time to turn");
   int angleSign =  sign(deltaAngle);
   deltaAngle = fmod(deltaAngle, 2 * M_PI);
   long turnTime = angleSign*deltaAngle*1000000;

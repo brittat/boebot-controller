@@ -130,8 +130,8 @@ float getGroupHeading(int groups[], int group)
     }
   }
   heading=heading/gLength;
-  heading = heading - 15.5;
-  Serial.println(heading/gLength);
+  heading = heading - 16;
+  //Serial.println(heading/gLength);
   return -aperture*heading;
 }
 
