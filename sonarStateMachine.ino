@@ -94,6 +94,7 @@ void sonarStateMachine()
       break;
 
       case 100:
+      Serial.println("I check for grabbed cylinders");
       sonarMotor.write(90);
       sonarDelay = t;
      
@@ -113,18 +114,18 @@ void sonarStateMachine()
       sonarState = 103;
       break;
 
-     case 104: //Wait for servo
+     case 103: //Wait for servo
       if(t - sonarDelay > sonarWaitTime)
       {
-        sonarState = 105;
+        sonarState = 104;
       }
       
       break;
 
-    case 105: // Send init pulse
+    case 104: // Send init pulse
       highSonarPulse();
       sonarDelay = t;
-      sonarState = 3;
+      sonarState = 105;
       break;
 
     case 105:
@@ -134,10 +135,19 @@ void sonarStateMachine()
       }
       break;
 
-    case 106: // Done      
+    case 106: // Done 
+          Serial.println(verifyHigh);
+          Serial.println(verifyLow);
+         if(verifyHigh-verifyLow > 30){
+
+          cylinderGrabbed = true;
+          Serial.println("I found a cylinder!");
+          Serial.println("And I grabbed it!");
+          
+         }
         verifyCylinder = false;
         sonarState = -1;
-      }      
+            
       
       break;
   }

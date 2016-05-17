@@ -5,7 +5,7 @@ void cylinderApproach()
     case 0: //Approach the cylinder
 
       turn(targetHeading);
-      driveDistance(targetDistance - 10);
+      driveDistance(targetDistance - 30);
       state = 1;
 
       break;
@@ -31,17 +31,27 @@ void cylinderApproach()
       break;
 
     case 2: //Verify that the cylinder is grabbed
-      if(cylinderGrabbed){
-
-        behaviourState = beaconFind;
-        
-      }else{
-        
-        behaviourState = rWalk;        
+      verifyCylinder = true;
+      state = 3;
+      break;
       
-      }
+    case 3:
 
-      Serial.println("approach 4");
+      if (!verifyCylinder) {
+        if (cylinderGrabbed) {
+          Serial.println("cylinder is grabbed");
+          behaviourState = beaconFind;
+
+
+
+        } else {
+          Serial.println("cylinder is not grabbed");
+          behaviourState = rWalk;
+
+        }
+
+        state = -1;
+      }
 
       break;
   }

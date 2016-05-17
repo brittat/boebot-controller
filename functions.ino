@@ -40,20 +40,21 @@ void turn(float deltaAngle)
   int angleSign =  sign(deltaAngle);
   deltaAngle = fmod(deltaAngle, 2 * M_PI);
   long turnTime = angleSign*deltaAngle*1000000;
-
-  if(angleSign > 0)
-  {
+  Serial.println(turnTime/1000000.0);
+  //if(angleSign > 0)
+  //{
     turnTime = turnTime*0.64;
-  }else{
-    turnTime = turnTime*0.64;
-  }
+  //}else{
+    //turnTime = turnTime*0.64;
+  //}
   turnSetTime(turnTime, angleSign);
 }
 
-void turnSetTime(long turnTime, int angleSign)
+void turnSetTime(long turnTime1, int angleSign)
 {
   long turnStart = micros();
-  while(micros() - turnStart < turnTime)
+  Serial.println(turnTime1);
+  while(micros() - turnStart < turnTime1)
   {
     leftSpeed(-angleSign*turnRate);
     rightSpeed(angleSign*turnRate);
