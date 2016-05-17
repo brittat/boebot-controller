@@ -1,4 +1,5 @@
 const float dirAngle = degreeAperture/nDir;
+int verifyAngle = 10;
 void sonarStateMachine()
 { 
   t = micros();
@@ -95,9 +96,9 @@ void sonarStateMachine()
 
       case 100:
       Serial.println("I check for grabbed cylinders");
-      sonarMotor.write(90);
+      sonarMotor.write(verifyAngle);
       sonarDelay = t;
-     
+      
       sonarState = 101;
       break;
       
@@ -143,12 +144,26 @@ void sonarStateMachine()
           cylinderGrabbed = true;
           Serial.println("I found a cylinder!");
           Serial.println("And I grabbed it!");
+          verifyCylinder = false;
+          sonarState = -1;
           
          }
-        verifyCylinder = false;
-        sonarState = -1;
-            
-      
+         else
+         {
+          verifyAngle += 20;
+          if(verifyAngle < degreeAperture)
+          {
+            sonarMotor.write(verifyAngle);
+            sonarState = 101;
+            sonarDelay = t;
+          }
+          else
+          {
+            cylinderGrabbed = false;
+            verifyCylinder = false;
+            sonarState = -1;
+          }
+         }
       break;
   }
 }
