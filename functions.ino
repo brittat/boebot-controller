@@ -70,7 +70,7 @@ void driveDistance(int distance)
   leftSpeed(50);
   rightSpeed(50);
   drivingStart = t;
-  drivingTime = (long)distance * 1000 * 10.7;
+  drivingTime = (long)distance * 1000 * 10.9;
   Serial.println(drivingTime);
   drivingFinished = false;
 }

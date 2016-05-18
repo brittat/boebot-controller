@@ -1,5 +1,6 @@
 void findBeacon()
 {
+  Serial.println("I am an idiot");
 //long t = micros();
 switch(state)
 {

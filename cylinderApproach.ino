@@ -18,7 +18,7 @@ void cylinderApproach()
     //} else {
 
     //turn(targetHeading);
-    //driveDistance(targetDistance - 10);
+    //driveDistance(targetDistance - 0);
     //state = 1;
     //}
 
@@ -50,7 +50,7 @@ void cylinderApproach()
 
         }
 
-        state = -1;
+        state = 0;
       }
 
       break;

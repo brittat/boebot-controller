@@ -24,14 +24,14 @@ void detectCylinders()
   for (int i = 1; i < nDir; i++)
   {
     //if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
-    if (diffMillimeters[i] > 30) // find discontinuities in range data
+    if (diffMillimeters[i] > 20) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
     else
-    {
+    {      
+      //groups[i] = cGroup;
       cGroup++;
-      groups[i] = cGroup;
     }
   }
   Serial.println("Features found:");
@@ -48,7 +48,7 @@ void detectCylinders()
       float angle = aperture * groupLength; //Angle taken up by the feature
       //int dist = getMeanGroupDist(groups, iGroup); //Average distance to feature
       int dist =  getDist(groups, iGroup, lowMillimeters);
-      Serial.println(dist);
+      
       float theta = groupLength * aperture / 2;
       float width = 2 * dist * tan(theta); //This one is approximately linear against the distance to the group
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
@@ -57,8 +57,10 @@ void detectCylinders()
       int maximumDistDiff = getMaxDiff(groups, iGroup);
       float groupSymmComparison = getSymmComparison(groups, iGroup);
       int groupVar = getVar(groups, iGroup, lowMillimeters);
+      printGroup(groups, iGroup, lowMillimeters);
+      Serial.println(groupVar);
       
-      if (dist < 2000 && abs(width - width2) < 150 && groupVar < 100)
+      if (dist < 2000 && abs(width - width2) < 15000 && groupVar < 100)
       {
         if (groupSymmComparison > maxSymmComp)
         {
@@ -123,7 +125,7 @@ int getVar(int groups[], int group, int measurements[])
 {
 
   int lowMeas = 10000;
-  int highMeas = 10000;
+  int highMeas = 0;
   
   for (int i = 0; i < nDir; i++)
   {
