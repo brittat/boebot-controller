@@ -1,5 +1,5 @@
 const int maxFeatureDepth = 30;
-
+int targetGroup = 0;
 
 //The coefficients below are used for detecting the cylinders
 //Coefficients for the polynomial approximating the width2-distance relation
@@ -8,7 +8,7 @@ const float P1 = 0.8082;
 
 //Coefficients for the polynomial approximating the angle-distance relation
 const float p0 = 1.0507;
-const float p1 = -1.6639/10000;
+const float p1 = -1.6639 / 10000;
 
 void detectCylinders()
 {
@@ -16,15 +16,15 @@ void detectCylinders()
   int cGroup = 1;
   groups[0] = cGroup;
 
-  for(int i = 0; i < nDir; i++)
+  for (int i = 0; i < nDir; i++)
   {
-    diffMillimeters[i] = highMillimeters[i] - lowMillimeters[i];  
+    diffMillimeters[i] = highMillimeters[i] - lowMillimeters[i];
   }
 
-  for(int i = 1; i < nDir; i++)
+  for (int i = 1; i < nDir; i++)
   {
     //if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
-    if(diffMillimeters[i] > 5) // find discontinuities in range data
+    if (diffMillimeters[i] > 30) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
@@ -38,25 +38,27 @@ void detectCylinders()
   float maxSymmComp = 0;
   int targetGroup = 0;
 
-  for(int iGroup = 1; iGroup <= cGroup; iGroup++)
+  for (int iGroup = 1; iGroup <= cGroup; iGroup++)
   {
     int groupLength = getGroupLength(groups, iGroup);
     //Serial.print("group length: ");
     //Serial.println(groupLength);
-    if(groupLength > 1)
+    if (groupLength > 2)
     {
       float angle = aperture * groupLength; //Angle taken up by the feature
-      int dist = getMeanGroupDist(groups, iGroup); //Average distance to feature
-      //float width = 2 * dist * sin((angle-dist/1000.0)/2); //Actual width of feature as seen by sonar. currently very unreliable
-      float theta = groupLength*aperture/2;
-      float width = 2*dist*tan(theta); //This one is approximately linear against the distance to the group
+      //int dist = getMeanGroupDist(groups, iGroup); //Average distance to feature
+      int dist =  getDist(groups, iGroup, lowMillimeters);
+      Serial.println(dist);
+      float theta = groupLength * aperture / 2;
+      float width = 2 * dist * tan(theta); //This one is approximately linear against the distance to the group
       float heading = getGroupHeading(groups, iGroup); // Direction to feature.
-      float width2 = P0 + P1*dist;
-      float angle2 = p0 + p1*dist;
+      float width2 = P0 + P1 * dist;
+      float angle2 = p0 + p1 * dist;
       int maximumDistDiff = getMaxDiff(groups, iGroup);
       float groupSymmComparison = getSymmComparison(groups, iGroup);
+      int groupVar = getVar(groups, iGroup, lowMillimeters);
       
-      if(dist < 2000 && abs(width-width2) < 150)
+      if (dist < 2000 && abs(width - width2) < 150 && groupVar < 100)
       {
         if (groupSymmComparison > maxSymmComp)
         {
@@ -65,8 +67,9 @@ void detectCylinders()
           targetHeading = heading;
           targetDistance = dist;
           maxSymmComp = groupSymmComparison;
+          targetGroup = iGroup;
         }
-        
+
       }
 
       Serial.print("Feature ");
@@ -88,15 +91,80 @@ void detectCylinders()
       Serial.println(maxSymmComp);
     }
   }
+  serialPrintArray(lowMillimeters, nDir);
   serialPrintArray(diffMillimeters, nDir);
+  printGroup(groups, targetGroup, lowMillimeters);
+}
+
+
+int getDist(int groups[], int group, int measurements[])
+{
+
+  int lowestMeas = 10000;
+
+  for (int i = 0; i < nDir; i++)
+  {
+    if (groups[i] == group)
+    {
+
+      if (measurements[i] < lowestMeas)
+      {
+
+        lowestMeas = measurements[i];
+
+      }
+    }
+  }
+  return lowestMeas;
+}
+
+
+int getVar(int groups[], int group, int measurements[])
+{
+
+  int lowMeas = 10000;
+  int highMeas = 10000;
+  
+  for (int i = 0; i < nDir; i++)
+  {
+    if (groups[i] == group)
+    {
+
+      if (measurements[i] < lowMeas)
+      {
+        lowMeas = measurements[i];
+      }  
+      if (measurements[i] > highMeas)
+      {
+        highMeas = measurements[i];
+      }
+      
+    }
+  }
+  return highMeas-lowMeas;
+}
+
+
+void printGroup(int groups[], int group, int measurements[])
+{
+
+  for (int i = 0; i < nDir; i++)
+  {
+    if (groups[i] == group)
+    {
+      Serial.print(measurements[i]);
+      Serial.print(" ");
+    }
+  }
+  Serial.println();
 }
 
 int getGroupLength(int groups[], int group)
 {
   int nPoints = 0;
-  for(int i = 0; i < nDir; i++)
+  for (int i = 0; i < nDir; i++)
   {
-    if(groups[i] == group)
+    if (groups[i] == group)
     {
       nPoints++;
     }
@@ -107,41 +175,41 @@ int getGroupLength(int groups[], int group)
 int getMeanGroupDist(int groups[], int group)
 {
   int distSum = 0;
-  for(int i = 0; i < nDir; i++)
+  for (int i = 0; i < nDir; i++)
   {
-    if(groups[i] == group)
+    if (groups[i] == group)
     {
       distSum += lowMillimeters[i];
     }
   }
-  return distSum/getGroupLength(groups, group);
+  return distSum / getGroupLength(groups, group);
 }
 
 float getGroupHeading(int groups[], int group)
 {
   float heading = 0;
   int gLength = 0;
-  for(int i = 0; i < nDir; i++)
+  for (int i = 0; i < nDir; i++)
   {
-    if(groups[i] == group)
+    if (groups[i] == group)
     {
       heading += i;
       gLength += 1;
     }
   }
-  heading=heading/gLength;
+  heading = heading / gLength;
   heading = heading - 16;
   //Serial.println(heading/gLength);
-  return -aperture*heading;
+  return -aperture * heading;
 }
 
 int getMaxDiff(int groups[], int group)
 {
   int minDist = 10000;
   int maxDist = 0;
-  for(int i = 0; i < nDir; i++)
+  for (int i = 0; i < nDir; i++)
   {
-    if(groups[i] == group)
+    if (groups[i] == group)
     {
       if (diffMillimeters[i] > maxDist)
       {
@@ -161,14 +229,14 @@ float getSymmComparison(int groups[], int group)
 {
   float maxDiff = getMaxDiff(groups, group);
   int lengthOfGroup = getGroupLength(groups, group);
-  float m = sign(maxDiff)*maxDiff;
+  float m = sign(maxDiff) * maxDiff;
   float symmVec[lengthOfGroup];
   float tmpVec[lengthOfGroup];
   //serialPrintArray(int(tmpVec), lengthOfGroup)
   int j = 0;
-  for(int i = 0; i < nDir; i++)
+  for (int i = 0; i < nDir; i++)
   {
-    if(groups[i] == group)
+    if (groups[i] == group)
     {
       tmpVec[j] = diffMillimeters[i];
       j++;
@@ -177,14 +245,14 @@ float getSymmComparison(int groups[], int group)
 
   float maxDistOfGroup = arrayMaxFloat(tmpVec, lengthOfGroup);
   float minDistOfGroup = arrayMinFloat(tmpVec, lengthOfGroup);
-  float symmVal=0; 
-  for(int i = 0; i < lengthOfGroup; i++)
+  float symmVal = 0;
+  for (int i = 0; i < lengthOfGroup; i++)
   {
 
-    symmVal = symmVal + pow((tmpVec[i]-tmpVec[lengthOfGroup-i-1])/(maxDistOfGroup-minDistOfGroup),2);  
+    symmVal = symmVal + pow((tmpVec[i] - tmpVec[lengthOfGroup - i - 1]) / (maxDistOfGroup - minDistOfGroup), 2);
 
   }
-return (float(lengthOfGroup)*m)/symmVal;
-  
+  return (float(lengthOfGroup) * m) / symmVal;
+
 }
 
