@@ -5,12 +5,12 @@ long t = micros();
 switch(randomState)
   {
     case 0: 
-    
+
     if (t - randomWalkStart > randomWalkTime && behaviourState == beaconExplore)
     {   
       behaviourState = beaconFind;
       randomState = 0;
-    }/* else if (doSonarSweep)
+    } else if (doSonarSweep)
     {
       rightSpeed(0);
       leftSpeed(0);
@@ -21,7 +21,7 @@ switch(randomState)
       rightSpeed(0);
       leftSpeed(0);
       randomState = 0;
-    }*/ else {
+    } else {
       randomState = 1;
     }
     break;

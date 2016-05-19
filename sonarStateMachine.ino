@@ -1,5 +1,5 @@
 const float dirAngle = degreeAperture/nDir;
-int verifyAngle = 60;
+int verifyAngle = 30;
 void sonarStateMachine()
 { 
   t = micros();

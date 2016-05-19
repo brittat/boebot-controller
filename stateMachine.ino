@@ -34,8 +34,8 @@ void stateMachine()
       rightSens = getIrRead(RIGHTIR, RIGHTIRSENS);
       delay(5);
       leftSens = getIrRead(LEFTIR, LEFTIRSENS);
-      Serial.print(leftSens);
-      Serial.println(rightSens);
+      //Serial.print(leftSens);
+      //Serial.println(rightSens);
       if (rightSens < 1) //Too far right
       {
         state = 1;

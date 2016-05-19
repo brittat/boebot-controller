@@ -51,10 +51,10 @@ long reverseTime = 3000000;
 long waitTimeLong = 750000;
 long waitTimeShort = 150000;
 long waitTime = 0;
-long scanInterval = 5000000;
+long scanInterval = 3000000;
 long timeSinceLastScan = 0;
 long randomWalkStart = 0;
-long randomWalkTime = 5000000;
+long randomWalkTime = 000000;
 int turnSpeed = 30;
 int moveSpeed = 50;
 int randomState = 0;
@@ -103,11 +103,11 @@ int diffMillimeters[nDir];
 
 // Ramp generator stuff
 unsigned long lastToneChange = 0;
-const long freqStep = 500;
+const long freqStep = 5000;
 const long baseFreq = 38000;
 const long maxFreq = 58000;
 const float divider = (maxFreq - baseFreq)/freqStep + 1;
-const long rampStepLength = 4000;
+const long rampStepLength = 2000;
 const long IRWaitTime = 1000;
 long currFreq = baseFreq;
 
@@ -157,9 +157,9 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(LOWPINGPIN), lowSonarISR, CHANGE);
   attachInterrupt(digitalPinToInterrupt(HIGHPINGPIN), highSonarISR, CHANGE);
   
-  Serial.println("N IR_left IR_mid IR_right");
-  Serial.println("L 0 60");
-  Serial.println("!");
+  //Serial.println("N IR_left IR_mid IR_right");
+  //Serial.println("L 0 60");
+  //Serial.println("!");
 
 }
 
@@ -170,17 +170,17 @@ void loop() {
   long oldT = t;
   t = micros();
   
-  //sonarStateMachine();
-  //rampGenerator();
-  //stateMachine2();  
-  //drivingTimer();
+  sonarStateMachine();
+  rampGenerator();
+  stateMachine2();  
+  drivingTimer();
   //Serial.println(targetHeading);
   //Serial.println(targetDistance);
   //Serial.println(state);
   //Serial.println(behaviourState);
   //Serial.println(behaviourState);
-  stateMachine2();
-  
+  //stateMachine2();
+ 
   //randomWalk();
   //findBeacon();
 

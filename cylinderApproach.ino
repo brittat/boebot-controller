@@ -3,9 +3,9 @@ void cylinderApproach()
   switch (approachState)
   {
     case 0: //Approach the cylinder
-
+      
       turn(targetHeading-0.15);
-      driveDistance(targetDistance - 30);
+      driveDistance(targetDistance - 0);
       approachState = 1;
 
       break;

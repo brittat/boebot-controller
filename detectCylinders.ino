@@ -38,8 +38,10 @@ void detectCylinders()
   float maxSymmComp = 0;
   int targetGroup = 0;
 
+  trimGroups(groups);
   for (int iGroup = 1; iGroup <= cGroup; iGroup++)
   {
+    
     int groupLength = getGroupLength(groups, iGroup);
     //Serial.print("group length: ");
     //Serial.println(groupLength);
@@ -57,6 +59,7 @@ void detectCylinders()
       int maximumDistDiff = getMaxDiff(groups, iGroup);
       float groupSymmComparison = getSymmComparison(groups, iGroup);
       int groupVar = getVar(groups, iGroup, lowMillimeters);
+      Serial.print("Group data: ");
       printGroup(groups, iGroup, lowMillimeters);
       Serial.println(groupVar);
       
@@ -93,7 +96,9 @@ void detectCylinders()
       Serial.println(maxSymmComp);
     }
   }
+  Serial.print("Low sensor data: ");
   serialPrintArray(lowMillimeters, nDir);
+  Serial.print("Differential sensor data: ");
   serialPrintArray(diffMillimeters, nDir);
   printGroup(groups, targetGroup, lowMillimeters);
 }
@@ -256,5 +261,20 @@ float getSymmComparison(int groups[], int group)
   }
   return (float(lengthOfGroup) * m) / symmVal;
 
+}
+
+void trimGroups(int groups[])
+{
+  for(int iGroup = 0; iGroup < nDir; iGroup++)
+  {
+    int minDist = getDist(groups, iGroup, lowMillimeters);
+    for(int i = 0; i < nDir; i++)
+    {
+      if(groups[i] == iGroup && lowMillimeters[i] - minDist > 200)
+      {
+        groups[i] = 0;
+      }
+    }
+  }
 }
 

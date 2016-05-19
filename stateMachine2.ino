@@ -2,12 +2,12 @@
 void stateMachine2()
 {  
   long t = micros();
-  int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
-  irSum = (ir + irSum)*ir;
-  Serial.println(irSum);
-  if (irSum>6 && behaviourState != reverse){    
-    behaviourState = reverse;
-    safeState = 0;
+  //int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
+  //irSum = (ir + irSum)*ir;
+  //Serial.println(IRDists[1]);
+  if (IRDists[1]>0.95 && behaviourState != reverse){    
+    //behaviourState = reverse;
+    //safeState = 0;
   }
   if (cylinderFound)
   {

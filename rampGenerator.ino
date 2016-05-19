@@ -8,16 +8,16 @@ void rampGenerator()
 {
   t = micros();
   
-  if(t%1024 == 0) //Data printing every once in a while for debug
+  if(t%128 == 0) //Data printing every once in a while for debug
   {
-//    Serial.print("D ");
-//    Serial.print(t/1000);
-//    Serial.print(" ");
-//    Serial.print(IRDists[0]);
-//    Serial.print(" ");
-//    Serial.print(IRDists[1]);
-//    Serial.print(" ");
-//    Serial.println(IRDists[2]);
+    Serial.print("D ");
+    Serial.print(t/1000);
+    Serial.print(" ");
+    Serial.print(IRDists[0]);
+    Serial.print(" ");
+    Serial.print(IRDists[1]);
+    Serial.print(" ");
+    Serial.println(IRDists[2]);
   }
   
   //Turn off the LED if we're looking for the beacon.

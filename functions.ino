@@ -26,21 +26,22 @@ float getDistanceIR(int outPin, int sensPin)
 // Wrappers for servo motors
 void leftSpeed(int spd)
 {
-  leftMotor.writeMicroseconds(1498 + spd);
+  leftMotor.writeMicroseconds(1497+spd);//1498 + spd);
 }
 
 void rightSpeed(int spd)
 {
-  rightMotor.writeMicroseconds(1499 - spd);
+  rightMotor.writeMicroseconds(1497 - spd);//1499 - spd);
 }
 
 void turn(float deltaAngle)
 {
-  Serial.println("time to turn");
+  //Serial.println("time to turn");
   int angleSign =  sign(deltaAngle);
   deltaAngle = fmod(deltaAngle, 2 * M_PI);
   long turnTime = angleSign*deltaAngle*1000000;
-  Serial.println(turnTime/1000000.0);
+  //Serial.print("Turn time secs ");
+  //Serial.println(turnTime/1000000.0);
   //if(angleSign > 0)
   //{
     turnTime = turnTime*0.64;
@@ -53,7 +54,8 @@ void turn(float deltaAngle)
 void turnSetTime(long turnTime1, int angleSign)
 {
   long turnStart = micros();
-  Serial.println(turnTime1);
+  //Serial.print("Törn Time 1 ");
+  //Serial.println(turnTime1);
   while(micros() - turnStart < turnTime1)
   {
     leftSpeed(-angleSign*turnRate);
@@ -71,7 +73,7 @@ void driveDistance(int distance)
   rightSpeed(50);
   drivingStart = t;
   drivingTime = (long)distance * 1000 * 10.9;
-  Serial.println(drivingTime);
+  //Serial.println(drivingTime);
   drivingFinished = false;
 }
 
@@ -87,7 +89,7 @@ int getIrRead(int diodID, int sensorID)
 
 int getIrReadFloor(int diodID, int sensorID)
 {
-  tone(diodID, 17000, 8);                // Frequency to be tested in arena,18000
+  tone(diodID, 44000, 8);                // Frequency to be tested in arena,18000
   delay(1);                         // Wait 1 ms
   int ir = digitalRead(sensorID);         // IR receiver -> ir variable
   noTone(diodID);
