@@ -160,7 +160,7 @@ void setup() {
   Serial.println("N IR_left IR_mid IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
-  behaviourState = beaconFind;
+
 }
 
 
