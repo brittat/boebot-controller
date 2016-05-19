@@ -1,12 +1,12 @@
 void cylinderApproach()
 {
-  switch (state)
+  switch (approachState)
   {
     case 0: //Approach the cylinder
 
       turn(targetHeading-0.15);
       driveDistance(targetDistance - 30);
-      state = 1;
+      approachState = 1;
 
       break;
     //if (targetDistance > dangerZone){
@@ -26,13 +26,13 @@ void cylinderApproach()
     case 1: //Wait during cylinder approach
       if (drivingFinished) {
         Serial.println("cylinder approached");
-        state = 2;
+        approachState = 2;
       }
       break;
 
     case 2: //Verify that the cylinder is grabbed
       verifyCylinder = true;
-      state = 3;
+      approachState = 3;
       break;
       
     case 3:
@@ -50,7 +50,7 @@ void cylinderApproach()
 
         }
 
-        state = 0;
+        approachState = 0;
       }
 
       break;

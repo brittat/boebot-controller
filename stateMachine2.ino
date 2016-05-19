@@ -7,11 +7,11 @@ void stateMachine2()
   Serial.println(irSum);
   if (irSum>6 && behaviourState != reverse){    
     behaviourState = reverse;
-    state = 0;
+    safeState = 0;
   }
   if (cylinderFound)
   {
-   state = 0;
+   approachState = 0;
    behaviourState = approachCylinder; 
    cylinderFound = false;
   }

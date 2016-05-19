@@ -2,12 +2,14 @@
 void randomWalk()
 {
 long t = micros();
-switch(state)
+switch(randomState)
   {
     case 0: 
+    
     if (t - randomWalkStart > randomWalkTime && behaviourState == beaconExplore)
     {   
       behaviourState = beaconFind;
+      randomState = 0;
     }/* else if (doSonarSweep)
     {
       rightSpeed(0);
@@ -18,8 +20,9 @@ switch(state)
       doSonarSweep = true;
       rightSpeed(0);
       leftSpeed(0);
+      randomState = 0;
     }*/ else {
-      state = 1;
+      randomState = 1;
     }
     break;
     
@@ -30,17 +33,17 @@ switch(state)
       leftSens = getIrRead(LEFTIR,LEFTIRSENS);
       if(rightSens < 1) //Too far right
       {
-        state = 2;
+        randomState = 2;
         turnTime = random(300000, 1500000);
         delayStart = t;
       }
       else if (leftSens < 1) //Too far left
       {
-        state = 3;
+        randomState = 3;
         turnTime = random(300000, 1500000);
         delayStart = t;
       } else {
-        state = 0;
+        randomState = 0;
       }
       break;
     case 2: //turn left
@@ -48,7 +51,7 @@ switch(state)
       rightSpeed(turnSpeed);
       if(t - delayStart > turnTime)
       {
-        state = 0;
+        randomState = 0;
       }
       break;
 
@@ -57,7 +60,7 @@ switch(state)
       rightSpeed(-turnSpeed);
       if(t - delayStart > turnTime)
       {
-        state = 0;
+        randomState = 0;
       }
       break;  
   }

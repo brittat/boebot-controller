@@ -1,12 +1,12 @@
 void findBeacon()
 {
 //long t = micros();
-switch(state)
+switch(beaconState)
 {
     case 0: //Beacon search initiated, stop for scan
       leftSpeed(0);
       rightSpeed(0);
-      state = 1;
+      beaconState = 1;
       break;
 
     case 1: //Scan for beacon
@@ -21,7 +21,7 @@ switch(state)
         delayStart = t;
         waitTime = 10*waitTimeLong;
         numberOfTurns = 0;
-        state = 2;
+        beaconState = 2;
       }else if(summedBeaconRead == 0){ //No detection
         leftSpeed(-turnSpeed);
         rightSpeed(turnSpeed);
@@ -29,10 +29,11 @@ switch(state)
         if (numberOfTurns < 8){ 
           waitTime = waitTimeLong;
           delayStart = t;
-          state = 2;
+          beaconState = 2;
         }else{ //If it has checked 360 degrees it goes into random walk
           behaviourState = beaconExplore;
-          state = 0;
+          randomState = 0;
+          beaconState = 0;
           randomWalkStart = t;
           numberOfTurns = 0;  
         }
@@ -40,14 +41,14 @@ switch(state)
         leftSpeed(-turnSpeed);
         rightSpeed(turnSpeed);
         delayStart = t;
-        state = 2;
+        beaconState = 2;
         numberOfTurns = 0;
         waitTime = waitTimeShort;
       }else{ //If no detection on the left, rotate to the right
         leftSpeed(turnSpeed);
         rightSpeed(-turnSpeed);
         delayStart = t;
-        state = 2;
+        beaconState = 2;
         numberOfTurns = 0;
         waitTime = waitTimeShort;
       }
@@ -55,7 +56,7 @@ switch(state)
       
     case 2: //Wait, keep on doing what you're doing
       if (t - delayStart > waitTime){
-        state = 0;
+        beaconState = 0;
       }
       break;      
   }

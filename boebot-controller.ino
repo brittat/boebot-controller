@@ -54,9 +54,14 @@ long waitTime = 0;
 long scanInterval = 5000000;
 long timeSinceLastScan = 0;
 long randomWalkStart = 0;
-long randomWalkTime = 10000000;
+long randomWalkTime = 5000000;
 int turnSpeed = 30;
 int moveSpeed = 50;
+int randomState = 0;
+int beaconState = 0;
+int safeState = 0;
+int approachState = 0;
+
 
 //Cylinder retrieval stuff
 bool cylinderGrabbed = false;
@@ -116,7 +121,7 @@ const int NUM_IR_DIR = 3;
 
 enum IRDirection {LEFT, MID, RIGHT};
 IRDirection currIRDir = LEFT;
-enum stateEnum {rWalk, reverse, sonarSweep, beaconFind, approachCylinder, beaconExplore};
+enum stateEnum {rWalk, reverse, beaconFind, approachCylinder, beaconExplore};
 stateEnum behaviourState = rWalk;
 
 float IRDists[NUM_IR_DIR];
@@ -155,6 +160,7 @@ void setup() {
   Serial.println("N IR_left IR_mid IR_right");
   Serial.println("L 0 60");
   Serial.println("!");
+  behaviourState = beaconFind;
 }
 
 
@@ -172,7 +178,9 @@ void loop() {
   //Serial.println(targetDistance);
   //Serial.println(state);
   //Serial.println(behaviourState);
+  //Serial.println(behaviourState);
   stateMachine2();
+  
   //randomWalk();
   //findBeacon();
 

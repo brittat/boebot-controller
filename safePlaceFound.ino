@@ -1,13 +1,13 @@
 void safePlaceFound()
 {
 long t = micros();
-switch(state)
+switch(safeState)
 {
   case 0: //Stop
     leftSpeed(0);
     rightSpeed(0);
     delay(200);
-    state = 1;
+    safeState = 1;
     reverseStart = t;
     break;
 
@@ -17,7 +17,8 @@ switch(state)
     if (t - reverseStart > reverseTime)
     {
       behaviourState = rWalk;
-      state = random(1) + 2; //Choose left or right at random
+      randomState = random(1) + 2; //Choose left or right at random
+      safeState = 0;
       turnTime = random(1500000);
       delayStart = t;  
     } 
