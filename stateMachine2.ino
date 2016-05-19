@@ -4,10 +4,11 @@ void stateMachine2()
   long t = micros();
   int ir = getIrReadFloor(MIDDLEIR,MIDDLEIRSENS);
   irSum = (ir + irSum)*ir;
- /* if (irSum>3 && behaviourState != reverse){    
+  Serial.println(irSum);
+  if (irSum>6 && behaviourState != reverse){    
     behaviourState = reverse;
     state = 0;
-  }*/
+  }
   if (cylinderFound)
   {
    state = 0;

@@ -157,28 +157,26 @@ void setup() {
   Serial.println("!");
 }
 
-void loop() {
 
+void loop() {
+ 
 
   long oldT = t;
   t = micros();
   
-  sonarStateMachine();
+  //sonarStateMachine();
   //rampGenerator();
-  stateMachine2();  
-  drivingTimer();
+  //stateMachine2();  
+  //drivingTimer();
   //Serial.println(targetHeading);
   //Serial.println(targetDistance);
   //Serial.println(state);
   //Serial.println(behaviourState);
-  //stateMachine2();
+  stateMachine2();
   //randomWalk();
   //findBeacon();
+
  
-  //findBeacon();
-  //int ir = beaconRead();
-  //int ir = sumIR(RIGHTIRSENS);
-  //Serial.println(numberOfTurns);
   
 }
 

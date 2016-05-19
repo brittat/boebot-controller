@@ -87,7 +87,7 @@ int getIrRead(int diodID, int sensorID)
 
 int getIrReadFloor(int diodID, int sensorID)
 {
-  tone(diodID, 15000, 8);                // Frequency to be tested in arena,18000
+  tone(diodID, 17000, 8);                // Frequency to be tested in arena,18000
   delay(1);                         // Wait 1 ms
   int ir = digitalRead(sensorID);         // IR receiver -> ir variable
   noTone(diodID);

@@ -1,6 +1,5 @@
 void findBeacon()
 {
-  Serial.println("I am an idiot");
 //long t = micros();
 switch(state)
 {
@@ -20,7 +19,7 @@ switch(state)
         leftSpeed(moveSpeed);
         rightSpeed(moveSpeed);
         delayStart = t;
-        waitTime = 4*waitTimeLong;
+        waitTime = 10*waitTimeLong;
         numberOfTurns = 0;
         state = 2;
       }else if(summedBeaconRead == 0){ //No detection
