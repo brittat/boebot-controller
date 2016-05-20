@@ -56,8 +56,29 @@ switch(beaconState)
       
     case 2: //Wait, keep on doing what you're doing
       if (t - delayStart > waitTime){
-        beaconState = 0;
+        if (summedBeaconRead ==3)
+        {
+          verifyCylinder = true;
+          leftSpeed(0);
+          rightSpeed(0);          
+          beaconState = 3;
+        }else {
+          beaconState = 0;
+        }
       }
-      break;      
+      break;
+    case 3:
+    if(verifyCylinder == false)
+     {
+      if(cylinderGrabbed)
+      {
+      beaconState = 0;
+      }
+      else
+      {
+        behaviorState = rWalk;
+        beaconState = 0; 
+      }
+     }
   }
 }

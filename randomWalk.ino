@@ -14,7 +14,8 @@ switch(randomState)
     {
       rightSpeed(0);
       leftSpeed(0);
-      timeSinceLastScan = t;
+      
+      randomState = 10;
     } else if (t - timeSinceLastScan > scanInterval && behaviourState != beaconExplore)
     {
       doSonarSweep = true;
@@ -25,6 +26,15 @@ switch(randomState)
       randomState = 1;
     }
     break;
+
+    case 10:
+      if(!doSonarSweep)
+      {
+        timeSinceLastScan = t;
+        turn(random(-90,90) * M_PI / 180);
+        randomState = 0;
+      }
+      break;
     
     case 1:
       leftSpeed(moveSpeed);
