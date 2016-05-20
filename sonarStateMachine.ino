@@ -170,8 +170,8 @@ void sonarStateMachine()
       break;
 
     case 106: // Done 
-          Serial.println(verifyHigh);
-          Serial.println(verifyLow);
+          //Serial.println(verifyHigh);
+          //Serial.println(verifyLow);
          if(verifyHigh-verifyLow > 30 && verifyLow < 100){
 
           cylinderGrabbed = true;

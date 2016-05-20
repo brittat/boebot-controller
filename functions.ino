@@ -26,7 +26,7 @@ float getDistanceIR(int outPin, int sensPin)
 // Wrappers for servo motors
 void leftSpeed(int spd)
 {
-  leftMotor.writeMicroseconds(1497+spd);//1498 + spd);
+  leftMotor.writeMicroseconds(1496+spd);//1498 + spd);
 }
 
 void rightSpeed(int spd)
@@ -110,6 +110,9 @@ int beaconRead()
   int scanTime = 1000; //ms
   for (int i = 0; i < nPoints; i++)
   {
+    noTone(LEFTIR);
+    noTone(RIGHTIR);
+    delay(10);
     int irLeft = digitalRead(LEFTIRSENS);
     int irRight = digitalRead(RIGHTIRSENS);
     sumLeft = sumLeft + irLeft;

@@ -24,7 +24,7 @@ void detectCylinders()
   for (int i = 1; i < nDir; i++)
   {
     //if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
-    if (diffMillimeters[i] > 20) // find discontinuities in range data
+    if (diffMillimeters[i] > 9) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
@@ -34,10 +34,11 @@ void detectCylinders()
       cGroup++;
     }
   }
+  Serial.print("\n\n");
   Serial.println("Features found:");
   float maxSymmComp = 0;
   int targetGroup = 0;
-
+  int maxDiff = 32000;
   trimGroups(groups);
   for (int iGroup = 1; iGroup <= cGroup; iGroup++)
   {
@@ -59,19 +60,18 @@ void detectCylinders()
       int maximumDistDiff = getMaxDiff(groups, iGroup);
       float groupSymmComparison = getSymmComparison(groups, iGroup);
       int groupVar = getVar(groups, iGroup, lowMillimeters);
-      Serial.print("Group data: ");
-      printGroup(groups, iGroup, lowMillimeters);
-      Serial.println(groupVar);
       
+      
+      int widthDiff = abs(width - width2);
       if (dist < 2000 && abs(width - width2) < 15000 && groupVar < 100)
       {
-        if (groupSymmComparison > maxSymmComp)
+        if (widthDiff < maxDiff)
         {
           Serial.print("Potential target! ");
           cylinderFound = true;
           targetHeading = heading;
           targetDistance = dist;
-          maxSymmComp = groupSymmComparison;
+          maxDiff = widthDiff;
           targetGroup = iGroup;
         }
 
@@ -94,6 +94,10 @@ void detectCylinders()
       Serial.print(heading);
       Serial.print(", symmetry comparison value = ");
       Serial.println(maxSymmComp);
+      Serial.print("Group data: ");
+      printGroup(groups, iGroup, lowMillimeters);
+      printGroup(groups, iGroup, diffMillimeters);
+      Serial.println();
     }
   }
   Serial.print("Low sensor data: ");
@@ -103,6 +107,7 @@ void detectCylinders()
   Serial.print("Differential sensor data: ");
   serialPrintArray(diffMillimeters, nDir);
   printGroup(groups, targetGroup, lowMillimeters);
+  Serial.println();
 }
 
 
