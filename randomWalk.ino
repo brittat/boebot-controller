@@ -10,6 +10,7 @@ switch(randomState)
     {   
       behaviourState = beaconFind;
       randomState = 0;
+      Serial.println("Baconfind");
     } else if (doSonarSweep)
     {
       rightSpeed(0);
@@ -41,13 +42,15 @@ switch(randomState)
       rightSpeed(moveSpeed);
       rightSens = getIrRead(RIGHTIR,RIGHTIRSENS);
       leftSens = getIrRead(LEFTIR,LEFTIRSENS);
-      if(rightSens < 1) //Too far right
+      //if(rightSens < 1) //Too far right
+      if(IRDists[2] < .8) //Too far right
       {
         randomState = 2;
         turnTime = random(300000, 1500000);
         delayStart = t;
       }
-      else if (leftSens < 1) //Too far left
+      //else if (leftSens < 1) //Too far left
+      else if (IRDists[0] < .8) //Too far left
       {
         randomState = 3;
         turnTime = random(300000, 1500000);
@@ -57,6 +60,7 @@ switch(randomState)
       }
       break;
     case 2: //turn left
+      //Serial.println("Turning left");
       leftSpeed(-turnSpeed);
       rightSpeed(turnSpeed);
       if(t - delayStart > turnTime)
@@ -66,6 +70,7 @@ switch(randomState)
       break;
 
     case 3: //turn right
+      //Serial.println("Turning rights");
       leftSpeed(turnSpeed);
       rightSpeed(-turnSpeed);
       if(t - delayStart > turnTime)

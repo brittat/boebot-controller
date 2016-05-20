@@ -26,7 +26,6 @@ void sonarStateMachine()
   switch(sonarState)
   {
     case -1:
-      sonarMotor.write(90);
       if(doSonarSweep)
       {
         sonarState = 0;
@@ -36,6 +35,40 @@ void sonarStateMachine()
         sonarState = 100;
       }
       break;
+
+    case -2: //Aim sonars forward
+      //Serial.println("Aim sonars forward, later detectCylinders()");
+      sonarMotor.write(90);
+      sonarDelay = t;
+      sonarState = -3;
+      break;
+
+    case -22: //Aim sonars forward
+      //Serial.println("Aim sonars forward, no detectCylinders()");
+      sonarMotor.write(90);
+      sonarDelay = t;
+      sonarState = -33;
+      break;
+
+    case -3: //Wait for servo to aim sonars forward
+      //Serial.println("Waiting for sonars to aim forward");
+      if(t - sonarDelay > 2*servoWaitTime)
+      {
+        sonarState = -1;
+        doSonarSweep = false;
+      }      
+      break;
+
+    case -33: //Wait for servo to aim sonars forward
+      //Serial.println("Waiting for sonars to aim forward, and then we detectCylinders()");
+      if(t - sonarDelay > 2*servoWaitTime)
+      {
+        sonarState = -1;
+        doSonarSweep = false;
+        detectCylinders();
+      }      
+      break;
+      
     case 0: // Move servo into position
       //sonarMotor.write(90);
       sonarMotor.write(currDir*dirAngle + 15);
@@ -88,9 +121,8 @@ void sonarStateMachine()
       
       if(currDir == 0)
       {
-        detectCylinders();
-        doSonarSweep = false;
-        sonarState = -1;
+        sonarState = -2;
+        Serial.println("I found no cylinders and it's time to aim the sonars forward");
       }      
       
       break;
@@ -162,7 +194,9 @@ void sonarStateMachine()
             verifyAngle = 10;
             cylinderGrabbed = false;
             verifyCylinder = false;
-            sonarState = -1;
+            Serial.println("I verified the measurements and it's time to aim the sonars forward");
+            sonarState = -22; //Aim sonars forward
+            
           }
          }
       break;

@@ -174,6 +174,7 @@ void loop() {
   rampGenerator();
   stateMachine2();  
   drivingTimer();
+  
   //Serial.println(targetHeading);
   //Serial.println(targetDistance);
   //Serial.println(state);
