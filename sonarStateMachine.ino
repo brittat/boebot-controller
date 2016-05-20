@@ -40,14 +40,14 @@ void sonarStateMachine()
       //Serial.println("Aim sonars forward, later detectCylinders()");
       sonarMotor.write(90);
       sonarDelay = t;
-      sonarState = -3;
+      sonarState = -33;
       break;
 
     case -22: //Aim sonars forward
       //Serial.println("Aim sonars forward, no detectCylinders()");
       sonarMotor.write(90);
       sonarDelay = t;
-      sonarState = -33;
+      sonarState = -3;
       break;
 
     case -3: //Wait for servo to aim sonars forward
@@ -177,7 +177,7 @@ void sonarStateMachine()
           cylinderGrabbed = true;
           Serial.println("I grabbed a cylinder!");
           verifyCylinder = false;
-          sonarState = -1;
+          sonarState = -22;
           
          }
          else

@@ -76,7 +76,7 @@ switch(beaconState)
       }
       else
       {
-        behaviorState = rWalk;
+        behaviourState = rWalk;
         beaconState = 0; 
       }
      }

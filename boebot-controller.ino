@@ -103,7 +103,7 @@ int diffMillimeters[nDir];
 
 // Ramp generator stuff
 unsigned long lastToneChange = 0;
-const long freqStep = 5000;
+const long freqStep = 500;
 const long baseFreq = 38000;
 const long maxFreq = 58000;
 const float divider = (maxFreq - baseFreq)/freqStep + 1;

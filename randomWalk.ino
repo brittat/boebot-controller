@@ -32,7 +32,7 @@ switch(randomState)
       if(!doSonarSweep)
       {
         timeSinceLastScan = t;
-        turn(random(-90,90) * M_PI / 180);
+        //turn(random(-90,90) * M_PI / 180);
         randomState = 0;
       }
       break;

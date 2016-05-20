@@ -43,8 +43,8 @@ void detectCylinders()
   {
     
     int groupLength = getGroupLength(groups, iGroup);
-    //Serial.print("group length: ");
-    //Serial.println(groupLength);
+//    Serial.print("group length: ");
+//    Serial.println(groupLength);
     if (groupLength > 2)
     {
       float angle = aperture * groupLength; //Angle taken up by the feature
@@ -98,6 +98,8 @@ void detectCylinders()
   }
   Serial.print("Low sensor data: ");
   serialPrintArray(lowMillimeters, nDir);
+  Serial.print("High sensor data: ");
+  serialPrintArray(highMillimeters, nDir);
   Serial.print("Differential sensor data: ");
   serialPrintArray(diffMillimeters, nDir);
   printGroup(groups, targetGroup, lowMillimeters);
