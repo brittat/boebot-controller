@@ -24,7 +24,7 @@ void detectCylinders()
   for (int i = 1; i < nDir; i++)
   {
     //if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
-    if (diffMillimeters[i] > 9) // find discontinuities in range data
+    if (diffMillimeters[i] > 50) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
@@ -58,12 +58,12 @@ void detectCylinders()
       float width2 = P0 + P1 * dist;
       float angle2 = p0 + p1 * dist;
       int maximumDistDiff = getMaxDiff(groups, iGroup);
-      float groupSymmComparison = getSymmComparison(groups, iGroup);
+      //float groupSymmComparison = getSymmComparison(groups, iGroup);
       int groupVar = getVar(groups, iGroup, lowMillimeters);
       
       
       int widthDiff = abs(width - width2);
-      if (dist < 2000 && abs(width - width2) < 15000 && groupVar < 100)
+      if (dist < 2000 && abs(width - width2) < 100 && groupVar < 100)
       {
         if (widthDiff < maxDiff)
         {
@@ -92,8 +92,8 @@ void detectCylinders()
       Serial.print(width2);
       Serial.print(", heading = ");
       Serial.print(heading);
-      Serial.print(", symmetry comparison value = ");
-      Serial.println(maxSymmComp);
+      //Serial.print(", symmetry comparison value = ");
+      //Serial.println(maxSymmComp);
       Serial.print("Group data: ");
       printGroup(groups, iGroup, lowMillimeters);
       printGroup(groups, iGroup, diffMillimeters);

@@ -174,7 +174,13 @@ void loop() {
   rampGenerator();
   stateMachine2();  
   drivingTimer();
-  
+  Serial.print("IRreadings ");
+  Serial.print(leftSens);
+  Serial.print(" ");
+  Serial.println(rightSens);
+  //Serial.println(IRDists[0]);
+  //Serial.print(" ");
+  //Serial.println(IRDists[2]);
   //Serial.println(targetHeading);
   //Serial.println(targetDistance);
   //Serial.println(state);
