@@ -117,7 +117,7 @@ int beaconRead()
     int irRight = digitalRead(RIGHTIRSENS);
     sumLeft = sumLeft + irLeft;
     sumRight = sumRight+ irRight;
-    delay(scanTime/nPoints);    
+    delay(10);    
   }
   if (sumLeft == nPoints && sumRight == nPoints){
     return 0;
