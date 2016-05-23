@@ -54,7 +54,7 @@ long waitTime = 0;
 long scanInterval = 3000000;
 long timeSinceLastScan = 0;
 long randomWalkStart = 0;
-long randomWalkTime = 5000000;
+long randomWalkTime = 10000000;
 int turnSpeed = 30;
 int moveSpeed = 50;
 int randomState = 0;
@@ -174,19 +174,7 @@ void loop() {
   rampGenerator();
   stateMachine2();  
   drivingTimer();
-  Serial.print("IRreadings ");
-  Serial.print(leftSens);
-  Serial.print(" ");
-  Serial.println(rightSens);
-  //Serial.println(IRDists[0]);
-  //Serial.print(" ");
-  //Serial.println(IRDists[2]);
-  //Serial.println(targetHeading);
-  //Serial.println(targetDistance);
-  //Serial.println(state);
-  //Serial.println(behaviourState);
-  //Serial.println(behaviourState);
-  //stateMachine2();
+
  
   //randomWalk();
   //findBeacon();

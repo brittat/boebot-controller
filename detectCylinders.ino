@@ -24,7 +24,7 @@ void detectCylinders()
   for (int i = 1; i < nDir; i++)
   {
     //if(abs(diffMillimeters[i] - diffMillimeters[i-1]) < maxFeatureDepth) // find discontinuities in range data
-    if (diffMillimeters[i] > 50) // find discontinuities in range data
+    if (diffMillimeters[i] > 25) // find discontinuities in range data
     {
       groups[i] = cGroup;
     }
