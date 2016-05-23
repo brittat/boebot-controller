@@ -32,14 +32,15 @@ switch(randomState)
       if(!doSonarSweep)
       {
         timeSinceLastScan = t;
-        turn(random(-90,90) * M_PI / 180);
+        float temp = random(-90,90) * M_PI / 180;
+        turn(temp);
         randomState = 0;
       }
       break;
     
     case 1:
-      leftSpeed(moveSpeed);
-      rightSpeed(moveSpeed);
+      leftSpeed(randMoveSpeed);
+      rightSpeed(randMoveSpeed);
       //rightSens = getIrRead(RIGHTIR,RIGHTIRSENS);
       //leftSens = getIrRead(LEFTIR,LEFTIRSENS);
       //if(rightSens < 1) //Too far right

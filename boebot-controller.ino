@@ -51,16 +51,18 @@ long reverseTime = 3000000;
 long waitTimeLong = 750000;
 long waitTimeShort = 150000;
 long waitTime = 0;
-long scanInterval = 3000000;
+long scanInterval = 10000000;
 long timeSinceLastScan = 0;
 long randomWalkStart = 0;
 long randomWalkTime = 10000000;
 int turnSpeed = 30;
 int moveSpeed = 50;
+int randMoveSpeed = 70;
 int randomState = 0;
 int beaconState = 0;
 int safeState = 0;
 int approachState = 0;
+int lastBeaconRead = 0;
 
 
 //Cylinder retrieval stuff

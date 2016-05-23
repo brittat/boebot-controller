@@ -17,8 +17,8 @@ switch(beaconState)
       t = micros();
       Serial.println(summedBeaconRead);
       if (summedBeaconRead == 3){ //Detection on both sensors
-        leftSpeed(moveSpeed);
-        rightSpeed(moveSpeed);
+        leftSpeed(randMoveSpeed);
+        rightSpeed(randMoveSpeed);
         delayStart = t;
         waitTime = 10*waitTimeLong;
         numberOfTurns = 0;
@@ -27,7 +27,7 @@ switch(beaconState)
         leftSpeed(-turnSpeed);
         rightSpeed(turnSpeed);
         numberOfTurns++;
-        if (numberOfTurns < 8){ 
+        if (numberOfTurns < 10){ 
           waitTime = waitTimeLong;
           delayStart = t;
           beaconState = 2;
@@ -41,8 +41,8 @@ switch(beaconState)
       }else if(summedBeaconRead == 1){ //If no detection on the right, rotate to the left
         if (lastBeaconRead == 2){ //If last time detection on the other sensros, go forward
           lastBeaconRead = 0;
-          leftSpeed(moveSpeed);
-          rightSpeed(moveSpeed);
+          leftSpeed(randMoveSpeed);
+          rightSpeed(randMoveSpeed);
           delayStart = t;
           waitTime = 10*waitTimeLong;
           numberOfTurns = 0;
@@ -59,8 +59,8 @@ switch(beaconState)
       }else{ //If no detection on the left, rotate to the right
         if (lastBeaconRead == 1){ //If last time detection on the other sensros, go forward
           lastBeaconRead = 0;
-          leftSpeed(moveSpeed);
-          rightSpeed(moveSpeed);
+          leftSpeed(randMoveSpeed);
+          rightSpeed(randMoveSpeed);
           delayStart = t;
           waitTime = 10*waitTimeLong;
           numberOfTurns = 0;

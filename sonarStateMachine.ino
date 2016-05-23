@@ -172,7 +172,7 @@ void sonarStateMachine()
     case 106: // Done 
           //Serial.println(verifyHigh);
           //Serial.println(verifyLow);
-         if(verifyHigh-verifyLow > 30 && verifyLow < 100){
+         if(verifyHigh-verifyLow > 30 && verifyLow < 70){
 
           cylinderGrabbed = true;
           Serial.println("I grabbed a cylinder!");
@@ -180,7 +180,18 @@ void sonarStateMachine()
           sonarState = -22;
           
          }
-         else
+         else if (verifyHigh-verifyLow > 30 && verifyLow > 70 && verifyLow < 100)
+         {
+          leftSpeed(moveSpeed);
+          rightSpeed(moveSpeed);
+          delay(500);
+          leftSpeed(0);
+          rightSpeed(0);
+          cylinderGrabbed = true;
+          Serial.println("I grabbed a cylinder!");
+          verifyCylinder = false;
+          sonarState = -22;
+          } else
          {
           verifyAngle += 20;
           if(verifyAngle < degreeAperture)

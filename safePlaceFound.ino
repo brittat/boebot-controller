@@ -12,15 +12,17 @@ switch(safeState)
     break;
 
   case 1: //Reverse
-    leftSpeed(-moveSpeed);
-    rightSpeed(-moveSpeed);    
+    leftSpeed(-randMoveSpeed);
+    rightSpeed(-randMoveSpeed);    
     if (t - reverseStart > reverseTime)
     {
       behaviourState = rWalk;
-      randomState = random(1) + 2; //Choose left or right at random
+      //randomState = random(1) + 2; //Choose left or right at random
+      randomState = 0;
       safeState = 0;
-      turnTime = random(1500000);
-      delayStart = t;  
+      //turnTime = random(1500000);
+      //delayStart = t;
+      turn(M_PI);  
     } 
     break;
 }          
