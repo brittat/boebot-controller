@@ -13,8 +13,9 @@ switch(beaconState)
       //sumRight = sumIR(RIGHTIRSENS);
       //sumLeft = sumIR(LEFTIRSENS);
       summedBeaconRead = beaconRead();
+      delay(10);
       t = micros();
-      //Serial.println(summedBeaconRead);
+      Serial.println(summedBeaconRead);
       if (summedBeaconRead == 3){ //Detection on both sensors
         leftSpeed(moveSpeed);
         rightSpeed(moveSpeed);
@@ -38,19 +39,41 @@ switch(beaconState)
           numberOfTurns = 0;  
         }
       }else if(summedBeaconRead == 1){ //If no detection on the right, rotate to the left
-        leftSpeed(-turnSpeed);
-        rightSpeed(turnSpeed);
-        delayStart = t;
-        beaconState = 2;
-        numberOfTurns = 0;
-        waitTime = waitTimeShort;
+        if (lastBeaconRead == 2){ //If last time detection on the other sensros, go forward
+          lastBeaconRead = 0;
+          leftSpeed(moveSpeed);
+          rightSpeed(moveSpeed);
+          delayStart = t;
+          waitTime = 10*waitTimeLong;
+          numberOfTurns = 0;
+          beaconState = 2;          
+        }else{ //Else, keep turning
+          leftSpeed(-turnSpeed);
+          rightSpeed(turnSpeed);
+          delayStart = t;
+          beaconState = 2;
+          numberOfTurns = 0;
+          waitTime = waitTimeShort;
+          lastBeaconRead = summedBeaconRead;
+        }
       }else{ //If no detection on the left, rotate to the right
-        leftSpeed(turnSpeed);
-        rightSpeed(-turnSpeed);
-        delayStart = t;
-        beaconState = 2;
-        numberOfTurns = 0;
-        waitTime = waitTimeShort;
+        if (lastBeaconRead == 1){ //If last time detection on the other sensros, go forward
+          lastBeaconRead = 0;
+          leftSpeed(moveSpeed);
+          rightSpeed(moveSpeed);
+          delayStart = t;
+          waitTime = 10*waitTimeLong;
+          numberOfTurns = 0;
+          beaconState = 2;          
+        }else{ //Else, keep turning
+          leftSpeed(turnSpeed);
+          rightSpeed(-turnSpeed);
+          delayStart = t;
+          beaconState = 2;
+          numberOfTurns = 0;
+          waitTime = waitTimeShort;
+          lastBeaconRead = summedBeaconRead;
+        }
       }
       break;
       
